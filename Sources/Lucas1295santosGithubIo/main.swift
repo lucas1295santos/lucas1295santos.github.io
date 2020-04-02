@@ -25,6 +25,6 @@ struct Lucas1295santosGithubIo: Website {
 try Lucas1295santosGithubIo().publish(
   withTheme: .foundation,
   additionalSteps: [
-    .deploy(using: .gitHub("lucas1295santos/lucas1295santos.github.io", useSSH: false))
+    .deploy(using: .git("git@github.com-lucas1295santos:lucas1295santos/lucas1295santos.github.io.git"))
   ]
 )
