@@ -14,7 +14,7 @@ struct Lucas1295santosGithubIo: Website {
     }
 
     // Update these properties to configure your website:
-    var url = URL(string: "https://your-website-url.com")!
+    var url = URL(string: "https://lucas1295santos.github.io/")!
     var name = "Lucas1295santosGithubIo"
     var description = "A description of Lucas1295santosGithubIo"
     var language: Language { .english }
@@ -22,4 +22,9 @@ struct Lucas1295santosGithubIo: Website {
 }
 
 // This will generate your website using the built-in Foundation theme:
-try Lucas1295santosGithubIo().publish(withTheme: .foundation)
+try Lucas1295santosGithubIo().publish(
+  withTheme: .foundation,
+  additionalSteps: [
+    .deploy(using: .gitHub("lucas1295santos/lucas1295santos.github.io")),
+  ]
+)
