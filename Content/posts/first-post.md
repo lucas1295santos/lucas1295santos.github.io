@@ -1,8 +1,8 @@
 ---
-date: 2020-04-01 23:15
-description: A description of my first post.
-tags: first, article
+date: 2020-04-02 23:15
+description: The second post
+tags: second, article
 ---
-# My first post
+# My second post
 
-My first post's text.
+Hello world
