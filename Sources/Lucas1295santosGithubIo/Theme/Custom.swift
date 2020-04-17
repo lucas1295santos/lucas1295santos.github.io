@@ -21,17 +21,20 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
             .body(
                 .header(for: context, selectedSection: nil),
                 .wrapper(
-                    .h1(.text(context.site.description)),
-                    .p(
-                        .class("subtitle"),
-                        .text(context.site.description)
-                    ),
-                    .itemList(
-                        for: context.allItems(
-                            sortedBy: \.date,
-                            order: .descending
+                    .h2(.text(context.site.description)),
+                    .div(
+                        .class("flex-container"),
+                        .itemList(
+                            for: context.allItems(
+                                sortedBy: \.date,
+                                order: .descending
+                            ),
+                            on: context.site
                         ),
-                        on: context.site
+                        .div(
+                            .class("about"),
+                            .p(.text("ESSE É O ABOUT!"))
+                        )
                     )
                 ),
                 .footer(for: context.site)

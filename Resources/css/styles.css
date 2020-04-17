@@ -172,3 +172,17 @@ footer {
         padding: 40px 20px;
     }
 }
+
+.flex-container {
+    display: flex;
+}
+
+.item-list {
+    flex: 80%;
+    margin-right: 10px;
+}
+
+.about {
+    flex: 20%;
+    background-color: 111;
+}
