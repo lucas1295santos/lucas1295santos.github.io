@@ -21,9 +21,9 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
             .body(
                 .header(for: context, selectedSection: nil),
                 .wrapper(
-                    .h1(.text("About Swift and Engineering topics")),
+                    .h1(.text(context.site.description)),
                     .p(
-                        .class("description"),
+                        .class("subtitle"),
                         .text(context.site.description)
                     ),
                     .itemList(
@@ -68,9 +68,7 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
                         .div(
                             .class("content"),
                             .contentBody(item.body)
-                        ),
-                        .span("Tagged with: "),
-                        .tagList(for: item, on: context.site)
+                        )
                     )
                 ),
                 .footer(for: context.site)
@@ -93,60 +91,12 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
 
     func makeTagListHTML(for page: TagListPage,
                          context: PublishingContext<Site>) throws -> HTML? {
-        HTML(
-            .lang(context.site.language),
-            .head(for: page, on: context.site),
-            .body(
-                .header(for: context, selectedSection: nil),
-                .wrapper(
-                    .h1("Browse all tags"),
-                    .ul(
-                        .class("all-tags"),
-                        .forEach(page.tags.sorted()) { tag in
-                            .li(
-                                .class("tag"),
-                                .a(
-                                    .href(context.site.path(for: tag)),
-                                    .text(tag.string)
-                                )
-                            )
-                        }
-                    )
-                ),
-                .footer(for: context.site)
-            )
-        )
+        return nil
     }
 
     func makeTagDetailsHTML(for page: TagDetailsPage,
                             context: PublishingContext<Site>) throws -> HTML? {
-        HTML(
-            .lang(context.site.language),
-            .head(for: page, on: context.site),
-            .body(
-                .header(for: context, selectedSection: nil),
-                .wrapper(
-                    .h1(
-                        "Tagged with ",
-                        .span(.class("tag"), .text(page.tag.string))
-                    ),
-                    .a(
-                        .class("browse-all"),
-                        .text("Browse all tags"),
-                        .href(context.site.tagListPath)
-                    ),
-                    .itemList(
-                        for: context.items(
-                            taggedWith: page.tag,
-                            sortedBy: \.date,
-                            order: .descending
-                        ),
-                        on: context.site
-                    )
-                ),
-                .footer(for: context.site)
-            )
-        )
+        return nil
     }
 }
 
@@ -188,20 +138,16 @@ private extension Node where Context == HTML.BodyContext {
                         .href(item.path),
                         .text(item.title)
                     )),
-                    .tagList(for: item, on: site),
-                    .p(.text(item.description))
+                    .p(
+                        .text(item.description)
+                    ),
+                    .p(
+                        .class("post-date"),
+                        .text("Published at: \(item.date.toString)")
+                    )
                 ))
             }
         )
-    }
-
-    static func tagList<T: Website>(for item: Item<T>, on site: T) -> Node {
-        return .ul(.class("tag-list"), .forEach(item.tags) { tag in
-            .li(.a(
-                .href(site.path(for: tag)),
-                .text(tag.string)
-            ))
-        })
     }
 
     static func footer<T: Website>(for site: T) -> Node {

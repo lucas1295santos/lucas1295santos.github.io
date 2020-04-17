@@ -1,7 +1,6 @@
 ---
 date: 2020-04-01 23:15
 description: A description of my first post.
-tags: first, article
 ---
 # My first post
 

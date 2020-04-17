@@ -76,7 +76,7 @@ a {
     color: inherit;
 }
 
-.description {
+.subtitle {
     margin-bottom: 40px;
 }
 
@@ -141,6 +141,11 @@ a {
 
 footer {
     color: #8a8a8a;
+}
+
+.post-date {
+    margin-top: 20px;
+    font-size: 0.8em;
 }
 
 @media (prefers-color-scheme: dark) {
