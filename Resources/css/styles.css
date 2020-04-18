@@ -186,3 +186,31 @@ footer {
     flex: 20%;
     background-color: 111;
 }
+
+.about ul {
+    list-style-type:none;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.about p {
+    font-size: 0.8em;
+}
+
+.about h3 {
+    margin-bottom: 5px;
+}
+
+.social-media-button {
+  margin-right: 5px;
+  margin-left: 5px;
+  font-size: 2em;
+  color: white;
+}
+
+.social-media-buttons {
+    text-align: center;
+}
