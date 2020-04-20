@@ -15,7 +15,7 @@ extension Theme {
 private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
     func makeIndexHTML(for index: Index,
                        context: PublishingContext<Site>) throws -> HTML {
-        let paths: [Path] = ["/styles.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
+        let paths: [Path] = ["/css/styles.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
         return HTML(
             .lang(context.site.language),
             .head(for: index, on: context.site, stylesheetPaths: paths),
@@ -89,10 +89,17 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
 
     func makeItemHTML(for item: Item<Site>,
                       context: PublishingContext<Site>) throws -> HTML {
-        HTML(
+        let paths: [Path] = ["/css/styles.css", "/css/highlight/styles/sunburst.css"]
+        return HTML(
             .lang(context.site.language),
-            .head(for: item, on: context.site),
+            .head(for: item, on: context.site, stylesheetPaths: paths),
             .body(
+                .script(
+                    .src("/css/highlight/highlight.pack.js")
+                ),
+                .script(
+                    "hljs.initHighlightingOnLoad();"
+                ),
                 .class("item-page"),
                 .wrapper(
                     .article(
