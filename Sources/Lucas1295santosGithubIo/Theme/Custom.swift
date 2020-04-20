@@ -36,7 +36,7 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
                             .ul(
                                 .li(.img(.src(Path.forImage(named: "fotinha", withExtension: .jpg)))),
                                 .li(.h3("About")),
-                                .li(.p("Lucas Oliveira is a Software Engineer at iFood")),
+                                .li(.p("Lucas Oliveira is a Software Engineer at iFood who enjoys sharing knowledge, iOS development, trying new frameworks and libraries, and recently is really excited about using Swift outside Apple platforms as well")),
                                 .li(.h3("Social")),
                                 .li(
                                     .class("social-media-buttons"),
