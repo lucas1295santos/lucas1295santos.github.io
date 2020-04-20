@@ -169,7 +169,7 @@ private extension Node where Context == HTML.BodyContext {
                         .text(item.title)
                     )),
                     .p(
-                        .text(item.description)
+                        .markdown(item.description)
                     ),
                     .p(
                         .class("post-date"),
