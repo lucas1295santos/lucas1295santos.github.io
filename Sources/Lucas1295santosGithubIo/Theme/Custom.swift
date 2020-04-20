@@ -20,7 +20,6 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
             .lang(context.site.language),
             .head(for: index, on: context.site, stylesheetPaths: paths),
             .body(
-                .header(for: context, selectedSection: nil),
                 .wrapper(
                     .h2(.text(context.site.description)),
                     .div(
@@ -79,7 +78,6 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
             .lang(context.site.language),
             .head(for: section, on: context.site),
             .body(
-                .header(for: context, selectedSection: section.id),
                 .wrapper(
                     .h1(.text(section.title)),
                     .itemList(for: section.items, on: context.site)
@@ -96,7 +94,6 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
             .head(for: item, on: context.site),
             .body(
                 .class("item-page"),
-                .header(for: context, selectedSection: item.sectionID),
                 .wrapper(
                     .article(
                         .div(
@@ -116,7 +113,6 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
             .lang(context.site.language),
             .head(for: page, on: context.site),
             .body(
-                .header(for: context, selectedSection: nil),
                 .wrapper(.contentBody(page.body)),
                 .footer(for: context.site)
             )
