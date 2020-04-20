@@ -21,7 +21,7 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
             .head(for: index, on: context.site, stylesheetPaths: paths),
             .body(
                 .wrapper(
-                    .h2(.text("Software engineering with Swift at the heart ❤️")),
+                    .h1(.text("Software engineering with Swift at the heart ❤️")),
                     .div(
                         .class("flex-container"),
                         .itemList(
