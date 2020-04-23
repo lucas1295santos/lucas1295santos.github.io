@@ -100,9 +100,3 @@ Sunburst-like style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-strong {
   font-weight: bold;
 }
-
-code {
-  padding: 0px 5px;
-  background-color: #656565;
-  border-radius: 8px;
-}

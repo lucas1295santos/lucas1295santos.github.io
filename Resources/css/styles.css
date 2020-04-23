@@ -232,3 +232,9 @@ img {
 .social-media-buttons {
     text-align: center;
 }
+
+code {
+  padding: 0px 5px;
+  background-color: #656565;
+  border-radius: 8px;
+}
