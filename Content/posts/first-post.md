@@ -13,7 +13,7 @@ Before digging into how Publish works, I highly recommend that you read the READ
 
 ## Files structure
 
-![alt text](https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post1_img1.png "Starter project file structure")
+<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post1_img1.png" alt="File structure" style="width:200px;"/>
 
 When you start a new **Publish** website, it will create a file structure like the one above. The first thing we'll do is to understand what is the basic website generated.
 
