@@ -60,7 +60,7 @@ nav li a.selected {
 }
 
 h1 {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-size: 2em;
 }
 
@@ -69,7 +69,17 @@ h2 {
 }
 
 p {
+    font-weight: lighter;
     margin-bottom: 10px;
+    line-height: 1.5;
+    padding-bottom: 10px;
+}
+
+li {
+    font-weight: lighter;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    padding-bottom: 10px;
 }
 
 a {
@@ -201,7 +211,15 @@ img {
 }
 
 .about h3 {
+    padding-top: 5px;
     margin-bottom: 5px;
+}
+
+.about li {
+    font-weight: lighter;
+    margin-bottom: 0px;
+    line-height: 0;
+    padding-bottom: 5px;
 }
 
 .social-media-button {
@@ -213,4 +231,10 @@ img {
 
 .social-media-buttons {
     text-align: center;
+}
+
+code {
+  padding: 0px 5px;
+  background-color: #656565;
+  border-radius: 8px;
 }
