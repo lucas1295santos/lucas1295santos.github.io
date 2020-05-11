@@ -2,8 +2,6 @@ import Plot
 import Publish
 
 extension Theme {
-    /// The default "Foundation" theme that Publish ships with, a very
-    /// basic theme mostly implemented for demonstration purposes.
     static var custom: Self {
         Theme(
             htmlFactory: CustomHTMLFactory(),
