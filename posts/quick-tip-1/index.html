@@ -1,0 +1,25 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="og:site_name" content="Lucas Oliveira dot Tech"/><link rel="canonical" href="https://lucas1295santos.github.io/posts/quick-tip-1"/><meta name="twitter:url" content="https://lucas1295santos.github.io/posts/quick-tip-1"/><meta name="og:url" content="https://lucas1295santos.github.io/posts/quick-tip-1"/><title>Quick tip #1: Array copy-on-write | Lucas Oliveira dot Tech</title><meta name="twitter:title" content="Quick tip #1: Array copy-on-write | Lucas Oliveira dot Tech"/><meta name="og:title" content="Quick tip #1: Array copy-on-write | Lucas Oliveira dot Tech"/><meta name="description" content="I'm on a quest to study data structures in Swift, and one really cool feature that Swift arrays implement is copy-on-write!"/><meta name="twitter:description" content="I'm on a quest to study data structures in Swift, and one really cool feature that Swift arrays implement is copy-on-write!"/><meta name="og:description" content="I'm on a quest to study data structures in Swift, and one really cool feature that Swift arrays implement is copy-on-write!"/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/css/styles.css" type="text/css"/><link rel="stylesheet" href="/css/highlight/styles/sunburst.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to Lucas Oliveira dot Tech"/></head><body class="item-page"><script src="/css/highlight/highlight.pack.js"></script><script>hljs.initHighlightingOnLoad();</script><div class="wrapper"><article><div class="content"><h1>Quick tip #1: Array copy-on-write</h1><p>I'm studying data structures, and its implementations in Swift following the Udacity course <a href="https://www.udacity.com/course/data-structures-and-algorithms-in-swift--ud1011">Data Structures &amp; Algorithms in Swift</a> (I'm on early lessons, but from what I've seen so far, I recommend it). And one really nice thing that I learned on the arrays lesson, is that Swift arrays implement copy-on-write. But what does that mean?</p><p>Copy-on-write is a pattern that aims to save storage or memory allocation whenever it is possible by delaying copying a resource as long as it is possible. The copy only happens when someone writes on that resource, in other words, when someone edit, delete or add any information to it.</p><p>It is way easier to understand with some code, so here it goes.</p><pre><code class="language-swift">var originalArray = [1,2,3]
+var copyArray = originalArray
+
+originalArray.withUnsafeBufferPointer { (pointer) in
+  print("originalArray: \(pointer)")
+}
+copyArray.withUnsafeBufferPointer { (pointer) in
+  print("copyArray: \(pointer)")
+}
+
+print("Editing copyArray...")
+copyArray[2] = 20
+
+originalArray.withUnsafeBufferPointer { (pointer) in
+    print("originalArray: \(pointer)")
+}
+copyArray.withUnsafeBufferPointer { (pointer) in
+    print("copyArray: \(pointer)")
+}
+</code></pre><p>In the example above, I use <a href="https://developer.apple.com/documentation/swift/array/2994771-withunsafebufferpointer">withUnsafeBufferPointer</a> to get access to the pointer of the starting address of the array. When the code is executed, it outputs the following:</p><pre><code>originalArray: UnsafeBufferPointer(start: 0x0000600002ca3320, count: 3)
+copyArray: UnsafeBufferPointer(start: 0x0000600002ca3320, count: 3)
+Editing copyArray...
+originalArray: UnsafeBufferPointer(start: 0x0000600002ca3320, count: 3)
+copyArray: UnsafeBufferPointer(start: 0x0000600002cd95a0, count: 3)
+</code></pre><p>You can see that prior to the edition of <code>copyArray</code> both arrays are stored at the same memory address, and only after I did a write operation on it all the values from <code>originalArray</code> were copied over to another memory address, so than the copy could be edited without changing anything at the original.</p><p>Since this all happens under the hood, in most cases it makes no practical difference if you are aware of this language characteristic. But maybe you have a really specific situation where you want to give more context to the code by reassigning one array to a different name, and now you know that you will be paying basically nothing for it in terms of memory usage.</p><p>Thank you for reading, take care, and good coding!</p></div></article></div><footer><p>Generated using <a href="https://github.com/johnsundell/publish">Publish</a></p><p><a href="/feed.rss">RSS feed</a></p></footer></body></html>
