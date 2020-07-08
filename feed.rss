@@ -1,4 +1,133 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>Lucas Oliveira dot Tech</title><description>Tech blog about Swift and Engineering topics</description><link>https://lucas1295santos.github.io/</link><language>en</language><lastBuildDate>Sun, 24 May 2020 19:58:51 -0300</lastBuildDate><pubDate>Sun, 24 May 2020 19:58:51 -0300</pubDate><ttl>250</ttl><atom:link href="https://lucas1295santos.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">https://lucas1295santos.github.io/posts/quick-tip-1</guid><title>Quick tip #1: Array copy-on-write</title><description>I'm on a quest to study data structures in Swift, and one really cool feature that Swift arrays implement is copy-on-write!</description><link>https://lucas1295santos.github.io/posts/quick-tip-1</link><pubDate>Sun, 24 May 2020 00:00:00 -0300</pubDate><content:encoded><![CDATA[<h1>Quick tip #1: Array copy-on-write</h1><p>I'm studying data structures, and its implementations in Swift following the Udacity course <a href="https://www.udacity.com/course/data-structures-and-algorithms-in-swift--ud1011">Data Structures &amp; Algorithms in Swift</a> (I'm on early lessons, but from what I've seen so far, I recommend it). And one really nice thing that I learned on the arrays lesson, is that Swift arrays implement copy-on-write. But what does that mean?</p><p>Copy-on-write is a pattern that aims to save storage or memory allocation whenever it is possible by delaying copying a resource as long as it is possible. The copy only happens when someone writes on that resource, in other words, when someone edit, delete or add any information to it.</p><p>It is way easier to understand with some code, so here it goes.</p><pre><code class="language-swift">var originalArray = [1,2,3]
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>Lucas Oliveira dot Tech</title><description>Tech blog about Swift and Engineering topics</description><link>https://lucas1295santos.github.io/</link><language>en</language><lastBuildDate>Tue, 7 Jul 2020 21:01:00 -0300</lastBuildDate><pubDate>Tue, 7 Jul 2020 21:01:00 -0300</pubDate><ttl>250</ttl><atom:link href="https://lucas1295santos.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">https://lucas1295santos.github.io/posts/async-tests</guid><title>Testing asynchronous code</title><description>When you are starting out on testing your code, you might find asynchronous methods a little bit tricky to test. &lt;br&gt;&lt;/br&gt; But do not worry, *XCTestExpectation* got you covered if you want to assert that an async block *will* execute, or even assert that it *will not* execute.</description><link>https://lucas1295santos.github.io/posts/async-tests</link><pubDate>Tue, 7 Jul 2020 00:00:00 -0300</pubDate><content:encoded><![CDATA[<h1>Testing asynchronous code</h1><p>When you are starting out on testing your code, you might find asynchronous methods a little bit tricky to test.</p><p>But do not worry, <code>XCTestExpectation</code> got you covered if you want to assert that an async block <strong>will</strong> execute, or even assert that it <strong>will not</strong> execute.</p><p>In this post, I'll show you a really common case where you'll want to test an asynchronous method, and how to use <code>XCTestExpectation</code> to create an expectation that a block will be executed on the future, and how to create an inverted expectation to assert that a block will not be executed on the future.</p><h2>The use case</h2><p>Let's say that you are creating a feature that displays information about an item that your app sells. This feature will download the item details from an endpoint on a server whenever the user selects an item from a list. Then you will get the item ID and make an HTTP request to this endpoint to retrieve the item details. But to be more efficient on data usage, you also should cache every item fetched, so if the user wants to see details of an item that was already cached, instead of fetching it from the endpoint, you'll return the cached item.</p><p>To achieve this goal, this feature will have an <code>ItemWorker</code> class. It's objective is to return an item, given an ID. This class will contain the mechanism to get the item from a cache through a <code>CacheRepository</code> or, request it to the endpoint using <code>Network</code>.</p><p>This is a possible implementation of this class:</p><pre><code class="language-swift">final class ItemWorker {
+    private let network: NetworkProtocol
+    private let cache: CacheRepositoryProtocol
+    
+    init(
+        network: NetworkProtocol = Network.shared,
+        cache: CacheRepositoryProtocol = CacheRepository.shared
+    ) {
+        self.network = network
+        self.cache = cache
+    }
+    
+    func requestItem(withID id: String, completion: @escaping (Result&lt;Item, Error&gt;) -&gt; Void) {
+        // If the cache contains the item, return the item
+        if let cachedItem: Item = cache.get(forKey: id) {
+            completion(.success(cachedItem))
+        } else {
+            let request = ItemRequest.itemByID(id: id)
+            // Request an item passing the ID
+            network.request(request) { [weak self] (result: Result&lt;Item, Error&gt;) in
+                if case let Result.success(item) = result {
+                    // Cache the item if succeded
+                    self?.cache.set(item: item, forKey: item.id)
+                }
+                // Return what was fetched
+                completion(result)
+            }
+        }
+    }
+}
+</code></pre><p>Notice on this example that <code>Network</code> and <code>CacheRepository</code> are <strong>singletons</strong>, but however, I didn't use their shared instance directly. I used a <strong>Dependency injection</strong> technique to make <code>ItemWorker</code> depend on protocols instead. So this way, when we test this class, we can create mocked-up classes that conform to <code>NetworkProtocol</code> and <code>CacheRepositoryProtocol</code> that give us full control to test any network scenario or cache state that we want. If you never heard of this concept, I highly recommend that you read <a href="https://martinfowler.com/articles/injection.html#FormsOfDependencyInjection">this definition from Martin Fowler</a>. Mastering dependency injection will take your testing abilities to a whole new level.</p><p>If you need a little bit more of context to understand my implementation of <code>ItemWorker</code>, you can see the definition of the <code>NetworkProtocol</code>, <code>CacheRepositoryProtocol</code>, <code>ItemRequest</code> and <code>Item</code> bellow.</p><pre><code class="language-swift">protocol NetworkProtocol {
+    func request&lt;T: Codable&gt;(_ request: NetworkRequest, completion: @escaping (Result&lt;T, Error&gt;) -&gt; Void)
+}
+
+protocol CacheRepositoryProtocol {
+    func get&lt;T: Codable&gt;(forKey: String) -&gt; T?
+    func set&lt;T: Codable&gt;(item: T, forKey: String)
+}
+
+enum ItemRequest: NetworkRequest {
+    case itemByID(id: String)
+}
+
+struct Item: Codable {
+    let id: String
+    let name: String
+}
+</code></pre><h2>XCTExpectation</h2><p>Now that we have an <code>ItemWorker</code> that meets the requirements, we should write a test to assert that the requirements are indeed met. Our worker class will fetch the <code>Item</code> from the network only if the <code>Item</code> is not cached.</p><p>First, we will define our test cases. I like to be really descriptive, using the function names to state what is being tested, and what should happen. So if in a future point of time this test fails, it is easy to understand what is broken.</p><pre><code class="language-swift">final class ItemWorkerTests: XCTestCase {
+    // Sut means subject under test. It is what we are testing here.
+    private lazy var sut = ItemWorker()
+    
+    func test_requestItem_itemIsNotCached_expectRequestingItem() {
+
+    }
+    
+    func test_requestItem_itemIsCached_expectNotRequestingItem() {
+
+    }
+}
+</code></pre><p>Then, we should mock-up <code>Network</code> and <code>CacheRepository</code>, because we can't have our test to rely on network availability or cache state on the testing device. A good test should always pass if the code is correct, and it should always fail if the code is incorrect.</p><pre><code class="language-swift">final class ItemWorkerTests: XCTestCase {
+    let network = NetworkSpy()
+    let cache = CacheRepositoryMock()
+    private lazy var sut = ItemWorker(network: network, cache: cache)
+    
+    func test_requestItem_itemIsNotCached_expectRequestingItem() {
+
+    }
+    
+    func test_requestItem_itemIsCached_expectNotRequestingItem() {
+
+    }
+}
+
+final class NetworkSpy: NetworkProtocol {
+    func request&lt;T: Codable&gt;(_ request: NetworkRequest, completion: @escaping (Result&lt;T, Error&gt;) -&gt; Void) {
+
+    }
+}
+
+final class CacheRepositoryMock: CacheRepositoryProtocol {
+    var cachedObjectToBeReturned: Codable?
+    
+    func get&lt;T: Codable&gt;(forKey: String) -&gt; T? {
+        return cachedObjectToBeReturned as? T
+    }
+    
+    func set&lt;T: Codable&gt;(item: T, forKey: String) {}
+}
+</code></pre><p>Note how I added the property <code>cachedObjectToBeReturned</code> to easily control a hypothetical scenario of the <code>CacheRepository</code> state.</p><p>Now we are ready to implement our test cases. Let's begin from the case where there is no cache, and <code>ItemWorker</code> should fetch it from the <code>Network</code>. And we'll do it using <code>XCTestExpectation</code>.</p><p>A <code>XCTestExpectation</code> is a promise that you are creating now to be fulfilled in the future (using <code>expectation.fulfill()</code>). It is meant to be used paired with the method <code>wait(for expectations: , timeout:)</code> that asserts that all the expectations are fulfilled in a given time interval. Take a look at the implementation of the first test case, so you can understand what that means. You can also read the <a href="https://developer.apple.com/documentation/xctest/asynchronous_tests_and_expectations/testing_asynchronous_operations_with_expectations">docs from Apple</a>.</p><pre><code class="language-swift">// First we adapted our mocked up Network to fulfill an expectation when something is requested
+final class NetworkSpy: NetworkProtocol {
+    var requestCompleteExpectation: XCTestExpectation?
+    func request&lt;T: Codable&gt;(_ request: NetworkRequest, completion: @escaping (Result&lt;T, Error&gt;) -&gt; Void) {
+        requestCompleteExpectation?.fulfill()
+    }
+}
+
+// ...
+final class ItemWorkerTests: XCTestCase {
+    // ...
+    func test_requestItem_itemIsNotCached_expectRequestingItem() {
+        // Creates an expectation that will be fulfilled once the item is requested
+        let expectation = XCTestExpectation(description: "itemRequest")
+        network.requestCompleteExpectation = expectation
+        // Mock up a state where the cache doesn't have the requested item
+        cache.cachedObjectToBeReturned = nil
+        // Requests
+        sut.requestItem(withID: "1234", completion: { _ in })
+        // Waits for a second, if the expectation IS NOT fulfilled, fails
+        wait(for: [expectation], timeout: 1)
+    }
+    // ...
+}
+</code></pre><p>The test above should pass, because: - <code>CacheRepositoryMock</code> returns no item. - <code>NetworkSpy</code> is called, fulfilling the expectation. - The expectation that <code>wait</code> is waiting for, is fulfilled before the timeout of 1 second.</p><p>Now, to the test case where the <code>CacheRepository</code> does have the <code>Item</code> cached, and we should not request it from the <code>Network</code>, we will use the property <code>isInverted</code> from <code>XCTestExpectation</code>. This makes the expectation function the exact opposite way of a non-inverted one. This means that <code>wait(for expectations: , timeout:)</code> now asserts that the timeout expires before the expectation is fulfilled. For inverted expectations, if the expectation is fulfilled, the test fails. And this is perfect to assert that code is not executed in the future.</p><pre><code class="language-swift">final class ItemWorkerTests: XCTestCase {
+    // ...
+    func test_requestItem_itemIsCached_expectNotRequestingItem() {
+        // Creates an expectation that will be fulfilled once the item is requested
+        let expectation = XCTestExpectation(description: "itemRequest")
+        // Set the expectation to inveted, meaning that we expect it to not be fulfilled
+        expectation.isInverted = true
+        network.requestCompleteExpectation = expectation
+        cache.cachedObjectToBeReturned = Item(id: "1234", name: "Mac")
+        
+        sut.requestItem(withID: "1234", completion: { _ in })
+        // Waits for a second, if the expectation IS fulfilled, fails
+        wait(for: [expectation], timeout: 1)
+    }
+    // ...
+}
+</code></pre><p>The test above should pass, because: - <code>CacheRepositoryMock</code> returns an item. - The worker returns this item not calling <code>NetworkSpy</code>, so the expectation is never fulfilled. - The 1 second timeout defined on the <code>wait</code> method expires.</p><h2>Pro tip: using reasonable timeouts</h2><pre><code class="language-swift">wait(for: [expectation], timeout: 10)
+</code></pre><p>In the code above, if the expectation is not inverted, and it is fulfilled in 1 second, the test will pass without actually waiting the whole 10 seconds. But on the other hand, if it is an inverted expectation, the test will take 10 seconds to end the assertion.</p><p>Having tests that take long to complete is harmful to your project. This is especially important if you work on a large enterprise app, where having tests that clutter the CI/CD machines, decreases team productivity and costs the company money.</p><p>Thank you for reading! I hope this is was an useful learning. Take care and good coding!</p>]]></content:encoded></item><item><guid isPermaLink="true">https://lucas1295santos.github.io/posts/quick-tip-1</guid><title>Quick tip #1: Array copy-on-write</title><description>I'm on a quest to study data structures in Swift, and one really cool feature that Swift arrays implement is copy-on-write!</description><link>https://lucas1295santos.github.io/posts/quick-tip-1</link><pubDate>Sun, 24 May 2020 00:00:00 -0300</pubDate><content:encoded><![CDATA[<h1>Quick tip #1: Array copy-on-write</h1><p>I'm studying data structures, and its implementations in Swift following the Udacity course <a href="https://www.udacity.com/course/data-structures-and-algorithms-in-swift--ud1011">Data Structures &amp; Algorithms in Swift</a> (I'm on early lessons, but from what I've seen so far, I recommend it). And one really nice thing that I learned on the arrays lesson, is that Swift arrays implement copy-on-write. But what does that mean?</p><p>Copy-on-write is a pattern that aims to save storage or memory allocation whenever it is possible by delaying copying a resource as long as it is possible. The copy only happens when someone writes on that resource, in other words, when someone edit, delete or add any information to it.</p><p>It is way easier to understand with some code, so here it goes.</p><pre><code class="language-swift">var originalArray = [1,2,3]
 var copyArray = originalArray
 
 originalArray.withUnsafeBufferPointer { (pointer) in
