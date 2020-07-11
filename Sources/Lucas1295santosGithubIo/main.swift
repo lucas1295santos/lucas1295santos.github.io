@@ -16,7 +16,7 @@ struct Lucas1295santosGithubIo: Website {
     // Update these properties to configure your website:
     var url = URL(string: "https://lucas1295santos.github.io/")!
     var name = "Lucas Oliveira dot Tech"
-    var description = "Tech blog about Swift and Engineering topics"
+    var description = "Topics about Swift and Engineering"
     var language: Language { .english }
     var imagePath: Path? { nil }
 }

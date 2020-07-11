@@ -98,6 +98,7 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
                 .script(
                     "hljs.initHighlightingOnLoad();"
                 ),
+                .itemHeader(for: context.site),
                 .class("item-page"),
                 .wrapper(
                     .article(
@@ -140,30 +141,6 @@ private extension Node where Context == HTML.BodyContext {
         .div(.class("wrapper"), .group(nodes))
     }
 
-    static func header<T: Website>(
-        for context: PublishingContext<T>,
-        selectedSection: T.SectionID?
-    ) -> Node {
-        let sectionIDs = T.SectionID.allCases
-
-        return .header(
-            .wrapper(
-                .a(.class("site-name"), .href("/"), .text(context.site.name)),
-                .if(sectionIDs.count > 1,
-                    .nav(
-                        .ul(.forEach(sectionIDs) { section in
-                            .li(.a(
-                                .class(section == selectedSection ? "selected" : ""),
-                                .href(context.sections[section].path),
-                                .text(context.sections[section].title)
-                            ))
-                        })
-                    )
-                )
-            )
-        )
-    }
-
     static func itemList<T: Website>(for items: [Item<T>], on site: T) -> Node {
         return .ul(
             .class("item-list"),
@@ -198,6 +175,16 @@ private extension Node where Context == HTML.BodyContext {
                 .text("RSS feed"),
                 .href("/feed.rss")
             ))
+        )
+    }
+    
+    static func itemHeader<T: Website>(for site: T) -> Node {
+        return .div(
+            .class(""),
+            .a(
+                .text("Home"),
+                .href(.home)
+            )
         )
     }
 }
