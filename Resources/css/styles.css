@@ -187,6 +187,7 @@ footer {
 }
 
 .about {
+    font-size: 0.8em;
     flex: 20%;
     background-color: 111;
 }
@@ -196,16 +197,13 @@ footer {
 }
 
 img {
+    border-radius: 20px;
     width: 100%;
     height: auto;
 }
 
-.about p {
-    font-size: 0.8em;
-}
-
 .about h3 {
-    padding-top: 5px;
+    padding-top: 15px;
     margin-bottom: 5px;
 }
 
