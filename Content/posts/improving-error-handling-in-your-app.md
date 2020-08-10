@@ -31,7 +31,7 @@ If for some reason this function is ever invoked with a `nil` telefoneNumber, it
 
 It might be really frightening to a user with no technology background to be prompted with an error dialog full of tech words and error codes, especially if he just made a critical action like a purchase. Take a look at the picture on the left.
 
-<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post4_img1.png" alt="Error notification" style="width:200px;"/>
+<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post4_img1.png" alt="Error notification" style="width:500px;"/>
 
 On the other hand, the picture to the right explains what happened and how the user could proceed.
 
@@ -42,7 +42,7 @@ With a really well-crafted error recovering strategy you could even recover a us
 
 Recovering from errors is not only important for the tech team, but it is also beneficial for the business as a whole. Commonly, digital products lose some conversion percentual points due to techinical issues. And good error handling might mitigate this issue.
 
-<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post4_image2.png" alt="Error state recovery" style="width:200px;"/>
+<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post4_image2.png" alt="Error state recovery" style="width:500px;"/>
 
 The example above gives clear instructions and even some shortcuts on how to get out of this error and try another product.
 
