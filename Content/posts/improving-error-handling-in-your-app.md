@@ -12,6 +12,7 @@ So this article's objective is to explain why you should handle errors on your a
 
 ### Finding errors *asap*
 
+
 Worse than finding a bug on your production app is learning that the bug you just found is around for several releases.
 
 Below is the recipe of failure to ship a hard to catch bug.
@@ -27,6 +28,7 @@ If for some reason this function is ever invoked with a `nil` telefoneNumber, it
 
 ### Improving User Experience (UX)
 
+
 It might be really frightening to a user with no technology background to be prompted with an error dialog full of tech words and error codes, especially if he just made a critical action like a purchase. Take a look at the picture on the left.
 
 <img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post4_img1.png" alt="Error notification" style="width:200px;"/>
@@ -35,11 +37,12 @@ On the other hand, the picture to the right explains what happened and how the u
 
 ### Recovering from an error state to a success
 
+
 With a really well-crafted error recovering strategy you could even recover a user that got in an error state, to the main flow of your application that will lead to a goal (like making a purchase).
 
 Recovering from errors is not only important for the tech team, but it is also beneficial for the business as a whole. Commonly, digital products lose some conversion percentual points due to techinical issues. And good error handling might mitigate this issue.
 
-<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post4_img2.png" alt="Error state recovery" style="width:200px;"/>
+<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post4_image2.png" alt="Error state recovery" style="width:200px;"/>
 
 The example above gives clear instructions and even some shortcuts on how to get out of this error and try another product.
 
@@ -48,20 +51,23 @@ The example above gives clear instructions and even some shortcuts on how to get
 Maybe your App is nothing like any of the examples I gave so far, and you are not sure where you could improve error handling in your app. So you could follow this rule of thumb to know where you should consider handling errors.
 
 Consider handling errors every time you...
-*  ... make a request to an external source (networking)
-*  ... capture user input
-*  ... encode or decode some data
-*  ... escape a function prior to its full execution (early return)
+
+* ...make a request to an external source (networking)
+* ...capture user input
+* ...encode or decode some data
+* ...escape a function prior to its full execution (early return)
 
 ## Practical improvements for your App
 
 ### Monitoring tool
+
 
 This is the most important improvement that you could do! With a monitoring tool, you can have useful data to discover, understand, and prioritize errors.
 
 By understanding the volumetry of an error, you could decide between adding a fix to the next version, creating a new version as soon as possible just to fix that error (hotfix), or turn off some remote configuration to disable the problematic feature.
 
 There are several monitoring tools available on the market, like [Dynatrace](https://www.dynatrace.com/) or [New Relic](https://newrelic.com/). The monitoring tool that I use at iFood is [Logz.io](https://logz.io/). It provides all the utility that we need to keep track of error logs:
+
 * Logs over time
 * Querying for specific logs
 * Configuring alerts to send to Slack
@@ -76,6 +82,7 @@ With a good tool setup in the project, it is time to bring a monitoring culture 
 * Monitor the dashboard periodically. You could make a recurrent event on the calendar to be reminded.
 
 ### Swift's Error protocol
+
 
 Swift's error protocol allows you to create expressive errors that will give you useful information to find and act on a possible issue. Having rich errors will also help you to create insightful dashboards and precise alerts on your monitoring tool.
 
@@ -140,6 +147,7 @@ Now if an error of type `RegisterUserError` happens, you could display `error.lo
 
 ### Don't use `nil` as an error
 
+
 Take a look at the function below, it is uncanny how familiar this code is.
 
 ```swift
@@ -202,6 +210,7 @@ func getUserPreferences(userID id: String, completion: @escaping (Result<UserPre
 This way, the caller function could differentiate an encoding error from a network error, and log it.
 
 ### Separate error handling from the actual functionality
+
 
 If you are familiar with the `SOLID` principles, you know the importance of the *Single Responsibility Principle (SRP)*. The *SRP* says that our software units should have a single responsibility. What is a responsibility depends on the size of the software unit, the responsibility that a function can have is more narrow than the responsibility that a class or a module could handle.
 
