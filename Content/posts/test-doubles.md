@@ -179,4 +179,4 @@ One thing to keep in mind is that you always have to decide which dependencies o
 
 If you want to know more about `DIP` and the other `SOLID` principles, [this article from hackernoon](https://hackernoon.com/solid-principles-made-easy-67b1246bcdf) is a great light start. And [This repo from ochococo](https://github.com/ochococo/OOD-Principles-In-Swift) gives nice and easy examples and has links to in-depth articles that are really good reading.
 
-If you want to know how to unit test asynchronous code, check out [my article about it]. (https://www.lucasoliveira.tech/posts/async-tests)
+If you want to know how to unit test asynchronous code, check out [my article about it](https://www.lucasoliveira.tech/posts/async-tests).
