@@ -104,6 +104,7 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
                     .article(
                         .div(
                             .class("content"),
+                            .text(item.date.toString),
                             .contentBody(item.body)
                         )
                     )
