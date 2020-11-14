@@ -2,7 +2,7 @@
 date: 2020-11-14 00:00
 description: Naming is one of the most underrated and overlooked skills that a good programmer should have, yet is a skill that we use every day by giving names to variables, functions, services, and so on. Good names make messy code easier to understand, and makes good code a delight to read. In this post, I'll share some insights on how to detect bad naming, and how to improve it.
 ---
-# A reflection about code quality
+# Naming and code quality
 
 Naming is one of the most underrated and overlooked skills that a good programmer should have, yet is a skill that we use every day by giving names to variables, functions, services, and so on. Good names make messy code easier to understand, and makes good code a delight to read. In this post, I'll share some insights on how to detect bad naming, and how to improve it.
 
@@ -219,6 +219,7 @@ A great way of sharing the code with peers is by reading the code out loud and e
  ### Go beyond this article
 
 Here are some great resources that helped me be better at naming in software, and were inspirations for this article:
+
 * Good motivation on why you should care about naming, and its general principles by Gergely Orosz from the Pragmatic Engineer. [Read the post!](https://blog.pragmaticengineer.com/readable-code)
 * The section *Naming Things* from chapter 7 of *The Pragmatic Programmer* provides good examples, and questions that you should be doing while renaming code. [Buy it on Amazon!](https://ler.amazon.com.br/kp/embed?asin=B07VRS84D1&preview=newtab&linkCode=kpe&ref_=cm_sw_r_kb_dp_W89RFbA9SYG0F)
 * Chapter 2 *Meaningful names* from *Clean Code* is also a great reference, and was the chapter that made me realize the importance of taking the time and effort to name software. [Buy it on Amazon!](https://ler.amazon.com.br/kp/embed?asin=B001GSTOAM&preview=newtab&linkCode=kpe&ref_=cm_sw_r_kb_dp_cf-RFbNB5S5HN)
