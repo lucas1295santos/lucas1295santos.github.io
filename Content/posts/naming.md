@@ -1,5 +1,5 @@
 ---
-date: 2020-10-25 00:00
+date: 2020-11-14 00:00
 description: Naming is one of the most underrated and overlooked skills that a good programmer should have, yet is a skill that we use every day by giving names to variables, functions, services, and so on. Good names make messy code easier to understand, and makes good code a delight to read. In this post, I'll share some insights on how to detect bad naming, and how to improve it.
 ---
 # A reflection about code quality
