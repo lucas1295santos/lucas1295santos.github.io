@@ -10,22 +10,25 @@ Sunburst-like style (c) Vasily Polovnyov <vast@whiteants.net>
   padding: 0.5em;
   background: #111;
   color: #f8f8f8;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  font-size: 1.1em;
 }
 
 .hljs-comment,
 .hljs-quote {
-  color: #aeaeae;
+  color: #6C7986;
   font-style: italic;
 }
 
 .hljs-keyword,
 .hljs-selector-tag,
 .hljs-type {
-  color: #e28964;
+  color: #FC5FA3;
 }
 
 .hljs-string {
-  color: #65b042;
+  color: #FC6A5D;
 }
 
 .hljs-subst {
@@ -41,24 +44,19 @@ Sunburst-like style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-section,
 .hljs-tag,
 .hljs-name {
-  color: #89bdff;
-}
-
-.hljs-class .hljs-title,
-.hljs-doctag {
-  text-decoration: underline;
+  color: #5DD8FF;
 }
 
 .hljs-symbol,
 .hljs-bullet,
 .hljs-number {
-  color: #3387cc;
+  color: #D0BF69;
 }
 
 .hljs-params,
 .hljs-variable,
 .hljs-template-variable {
-  color: #3e87e3;
+  color: #f7faff;
 }
 
 .hljs-attribute {
