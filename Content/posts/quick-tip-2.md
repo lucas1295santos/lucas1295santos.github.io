@@ -59,7 +59,7 @@ extension NSDate {
 
 And the coolest thing about the `TimeInterval` example is how it is possible to add documentation to the type if more information is needed.
 
-<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post_quicktip2_img1.png" alt="TimeInterval documentation" style="width:250px;"/>
+<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post_quicktip2_img1.png" alt="TimeInterval documentation" style="width:480px;"/>
 
 You could create documentation for your own type aliases the same way you would create for a class or function. If you are new to documentation on XCode, [this guide](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html#//apple_ref/doc/uid/TP40016497-CH2-SW1) has everything you have to know (plus some cool formatting tips for playgrounds).
 
