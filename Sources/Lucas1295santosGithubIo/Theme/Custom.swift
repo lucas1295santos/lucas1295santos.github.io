@@ -92,12 +92,6 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
             .lang(context.site.language),
             .head(for: item, on: context.site, stylesheetPaths: paths),
             .body(
-                .script(
-                    .src("/css/highlight/highlight.pack.js")
-                ),
-                .script(
-                    "hljs.initHighlightingOnLoad();"
-                ),
                 .itemHeader(for: context.site),
                 .class("item-page"),
                 .wrapper(
@@ -109,7 +103,20 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
                         )
                     )
                 ),
-                .footer(for: context.site)
+                .footer(for: context.site),
+                .script(
+                    .src("/css/highlight/highlight.pack.js")
+                ),
+                .script(
+                    .src("https://getinsights.io/js/insights.js")
+                ),
+                .script(
+                    """
+                    hljs.initHighlightingOnLoad();
+                    insights.init('p1qng0PUS7iZ0oX8');
+                    insights.trackPages();
+                    """
+                )
             )
         )
     }
