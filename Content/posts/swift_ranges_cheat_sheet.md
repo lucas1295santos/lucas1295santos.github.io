@@ -2,7 +2,7 @@
 date: 2021-02-03 00:00
 description: Even after some years of experience in Swift, I still find ranges a little bit tricky and have to take a look in the docs or make a playground to test things out, before using them at work. This post is a cheat sheet with examples on how to use ranges.
 ---
-# Swift ranges cheatsheet
+# Swift ranges cheat sheet
 
 Even after some years of experience in Swift, I still find ranges a little bit tricky and have to take a look in the docs or make a playground to test things out, before using them at work. This post is a cheat sheet with examples on how to use ranges.
 
