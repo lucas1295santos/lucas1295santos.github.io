@@ -13,7 +13,10 @@ extension Theme {
 private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
     func makeIndexHTML(for index: Index,
                        context: PublishingContext<Site>) throws -> HTML {
-        let paths: [Path] = ["/css/styles.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
+        let paths: [Path] = [
+            "/css/styles.css",
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
+        ]
         return HTML(
             .lang(context.site.language),
             .head(for: index, on: context.site, stylesheetPaths: paths),
@@ -36,31 +39,7 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
                                 .li(.h3("About")),
                                 .li(.p("Lucas Oliveira is a Software Engineer at iFood who enjoys sharing knowledge, iOS development, trying new frameworks and libraries, and recently is really excited about using Swift outside Apple platforms as well")),
                                 .li(.h3("Social")),
-                                .li(
-                                    .class("social-media-buttons"),
-                                    .a(
-                                        .class("social-media-button"),
-                                        .i(
-                                            .class("fa fa-twitter")
-                                        ),
-                                        .href("https://twitter.com/oliveira__lucas")
-                                    ),
-                                    .a(
-                                        .class("social-media-button"),
-                                        .i(
-                                            .class("fa fa-github")
-                                        ),
-                                        .href("https://github.com/lucas1295santos")
-                                    ),
-                                    .a(
-                                        .class("social-media-button"),
-                                        .i(
-                                            .class("fa fa-linkedin")
-                                        ),
-                                        .href("https://linkedin.com/in/lucas-santos-168769106")
-                                    )
-                                    
-                                )
+                                SocialButtons.make()
                             )
                         )
                     )
@@ -87,7 +66,11 @@ private struct CustomHTMLFactory<Site: Website>: HTMLFactory {
 
     func makeItemHTML(for item: Item<Site>,
                       context: PublishingContext<Site>) throws -> HTML {
-        let paths: [Path] = ["/css/styles.css", "/css/highlight/styles/sunburst.css"]
+        let paths: [Path] = [
+            "/css/styles.css",
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",
+            "/css/highlight/styles/sunburst.css",
+        ]
         return HTML(
             .lang(context.site.language),
             .head(for: item, on: context.site, stylesheetPaths: paths),
@@ -172,6 +155,11 @@ private extension Node where Context == HTML.BodyContext {
 
     static func footer<T: Website>(for site: T) -> Node {
         return .footer(
+            .div(
+                .ul(
+                    SocialButtons.make()
+                )
+            ),
             .p(
                 .text("Generated using "),
                 .a(
