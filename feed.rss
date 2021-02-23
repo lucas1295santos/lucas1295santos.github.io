@@ -1,4 +1,93 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>Lucas Oliveira dot Tech</title><description>Topics about Swift and Engineering</description><link>https://lucas1295santos.github.io/</link><language>en</language><lastBuildDate>Wed, 3 Feb 2021 13:13:55 -0300</lastBuildDate><pubDate>Wed, 3 Feb 2021 13:13:55 -0300</pubDate><ttl>250</ttl><atom:link href="https://lucas1295santos.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">https://lucas1295santos.github.io/posts/swift_ranges_cheat_sheet</guid><title>Swift ranges cheat sheet</title><description>Even after some years of experience in Swift, I still find ranges a little bit tricky and have to take a look in the docs or make a playground to test things out, before using them at work. This post is a cheat sheet with examples on how to use ranges.</description><link>https://lucas1295santos.github.io/posts/swift_ranges_cheat_sheet</link><pubDate>Wed, 3 Feb 2021 00:00:00 -0300</pubDate><content:encoded><![CDATA[<h1>Swift ranges cheat sheet</h1><p>Even after some years of experience in Swift, I still find ranges a little bit tricky and have to take a look in the docs or make a playground to test things out, before using them at work. This post is a cheat sheet with examples on how to use ranges.</p><h2>What is a range?</h2><p>A range comprises a collection of elements between a certain lower and upper bound, bounds which might be included or excluded. The simplest use case of ranges that you might have seen, is to iterate on a <code>for</code> loop.</p><pre><code class="language-swift">for _ in 0 ..&lt; 5 {
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>Lucas Oliveira dot Tech</title><description>Topics about Swift and Engineering</description><link>https://lucas1295santos.github.io/</link><language>en</language><lastBuildDate>Tue, 23 Feb 2021 09:21:30 -0300</lastBuildDate><pubDate>Tue, 23 Feb 2021 09:21:30 -0300</pubDate><ttl>250</ttl><atom:link href="https://lucas1295santos.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">https://lucas1295santos.github.io/posts/equatable-enums</guid><title>Quick tip #3: Equatable enums in Swift</title><description>Enumerations is one of Swift's coolest features for its versatility in representing a group of related values. They can become even more versatile and expressive combined with protocols such as `Equatable`. This short article shows some tricks to do so.</description><link>https://lucas1295santos.github.io/posts/equatable-enums</link><pubDate>Tue, 23 Feb 2021 00:00:00 -0300</pubDate><content:encoded><![CDATA[<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/equatable-enums-header.png" alt="Equatable enums in Swift"/><h1>Quick tip #3: Equatable enums in Swift</h1><p>Enumerations is one the Swift's coolest features for its versatility in representing a group of related values. They can become even more versatile and expressive combined with protocols such as <code>Equatable</code>. This short article shows some tricks to do so.</p><p>This article assumes that you know what an enum is in Swift. If you are not sure about that, I highly recommend you to read the <a href="https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html#ID147">Swift docs on Enums</a> and <a href="https://www.swiftbysundell.com/basics/enums/">this post by John Sundell</a> that will cover all the basics and some more.</p><h2>Comparing enums</h2><p>Since an enum represents a finite set of options or states, we often want to compare values between enums, and the main way of doing that is using a <code>switch</code> statement like represented below:</p><pre><code class="language-swift">enum CameraPermissionStatus {
+    case granted
+    case notDetermined
+    case denied
+    case restricted
+}
+
+func presentCameraScene(with status: CameraPermissionStatus) {
+    switch status {
+    case .granted:
+        routeToCameraScene()
+    case .notDetermined:
+        presentCameraPermissionAlert()
+    case .denied:
+        presentSystemPermissionsSettings()
+    case .restricted:
+        presentRestrictedAccessDialog()
+    }
+}
+</code></pre><h2>Using switch</h2><p>Usually, you want to do a specific action for each enum case, that's why a <code>switch</code> statement is so fitting. Only in different cases like testing, you are interested in a single case, so a direct comparison would be better.</p><pre><code class="language-swift">func test_getCameraPermission_expectedToBeGranted() {
+    permissionProviderStub.permissionToBeReturned = .granted
+
+    let permission = sut.getCameraPermission()
+        
+    XCTAssertEqual(permission, .granted)
+}
+</code></pre><p>A piece of cake, isn't it?</p><p>Things can become a little tricky when the enum has an associated value.</p><pre><code class="language-swift">enum FeedbackAction {
+    case toast(message: String)
+    case alert(title: String, message: String)
+    case retryConnection
+}
+
+func test_getFeedback_whenErrorIsInvalidCard_expectAlert() {
+    let sut = PurchaseError(code: "INVALID_CARD")
+    
+    let feedback = sut.getFeedback()
+    
+    XCTAssertEqual(feedback, .alert)
+}
+</code></pre><p>Now if you try to do a similar test, like the one above, with this enum you'll get the error <code>Global function 'XCTAssertEqual(_:_:_:file:line:)' requires that 'FeedbackAction' conform to 'Equatable'</code>. So the obvious way of fixing this test would be to assert inside a <code>switch</code> statement.</p><pre><code class="language-swift">func test_getFeedback_whenErrorIsInvalidCard_expectAlert() {
+    let sut = PurchaseError(code: "INVALID_CARD")
+    
+    let feedback = sut.getFeedback()
+    
+    switch feedback {
+    case .alert(let title, let message):
+        XCTAssertEqual(title, "Invalid card")
+        XCTAssertEqual(message, "Review card information and try again")
+    default:
+        XCTFail("Expected alert feedback action")
+    }
+}
+</code></pre><p>Using the <code>switch</code> statement allowed us to assert that the type and all the associated values are matching the expected, at the cost of having to add the <code>XCTFail</code> at the default case as otherwise, the test would pass even without executing the assertions. Remember that a test success is the absence of failures, so a test without asserts is still a success. But what would this test look like if we were to assert the <code>retryConnection</code> case?</p><pre><code class="language-swift">func test_getFeedback_whenErrorIsNoNetwork_expectRetryConnection() {
+    let sut = PurchaseError(code: "NO_NETWORK")
+    
+    let feedback = sut.getFeedback()
+    
+    switch feedback {
+    case .retryConnection:
+        break
+    default:
+        XCTFail("Expected retryConnection feedback action")
+    }
+}
+</code></pre><p>Since the case <code>retryConnection</code> has no associated values, we don't have any assertions to do in the <code>switch</code> statement, so the test would pass by not asserting anything, or fail by the <code>XCTFail</code> on the <code>default</code> case. Besides looking weird, this test isn't clearly following the Arrange, Act, Assert (AAA) pattern since there is no assert.</p><p>If you are not sure what this AAA thing is, <a href="https://blog.ploeh.dk/2013/06/24/a-heuristic-for-formatting-code-according-to-the-aaa-pattern/">this article from Mark Seemann</a> briefly explains it, and gives good examples on how to write tests using this pattern. The AAA pattern is a basic standard for testing in many languages, so it is worth the effort to learn and practice it.</p><h2>Using Equatable</h2><p>A cleaner way of doing the same test would be to make <code>FeedbackAction</code> conform to <code>Equatable</code>.</p><pre><code class="language-swift">enum FeedbackAction: Equatable {
+    case toast(message: String)
+    case alert(title: String, message: String)
+    case retryConnection
+}
+
+func test_getFeedback_whenErrorIsInvalidCard_expectAlert() {
+    let sut = PurchaseError(code: "INVALID_CARD")
+    
+    let receivedFeedback = sut.getFeedback()
+    
+    let expectedFeedback = FeedbackAction.alert(
+        title: "Invalid card",
+        message: "Review card information and try again"
+    )
+    XCTAssertEqual(receivedFeedback, expectedFeedback)
+}
+</code></pre><p>By default when an enum is conforming to equatable, two values are considered equal if they are the same case and if all the associated values are equal.</p><pre><code class="language-swift">let a = FeedbackAction.alert(title: "123", message: "abc")
+let b = FeedbackAction.alert(title: "hello", message: "abc")
+let c = FeedbackAction.alert(title: "123", message: "abc")
+let d = FeedbackAction.toast(message: "abc")
+
+a == b // false
+a == c // true
+a == d // false
+</code></pre><p>So if your enum has associated values only from primitive types or types that have a built-in implementation of <code>Equatable</code>, you can just make the enum conform to the protocol and it will work like magic. Conversely, on a non-trivial custom type, you may have to implement <code>Equatable</code> conformance on this type, or give up and use the <code>switch</code> strategy.</p><h2>Thanks for reading!</h2><p>Liked this content? I always announce new articles on my <a href="https://twitter.com/oliveira__lucas">Twitter Account</a>. Suggestions, feedback, and corrections are always welcome.</p>]]></content:encoded></item><item><guid isPermaLink="true">https://lucas1295santos.github.io/posts/swift_ranges_cheat_sheet</guid><title>Swift ranges cheat sheet</title><description>Even after some years of experience in Swift, I still find ranges a little bit tricky and have to take a look in the docs or make a playground to test things out, before using them at work. This post is a cheat sheet with examples on how to use ranges.</description><link>https://lucas1295santos.github.io/posts/swift_ranges_cheat_sheet</link><pubDate>Wed, 3 Feb 2021 00:00:00 -0300</pubDate><content:encoded><![CDATA[<h1>Swift ranges cheat sheet</h1><p>Even after some years of experience in Swift, I still find ranges a little bit tricky and have to take a look in the docs or make a playground to test things out, before using them at work. This post is a cheat sheet with examples on how to use ranges.</p><h2>What is a range?</h2><p>A range comprises a collection of elements between a certain lower and upper bound, bounds which might be included or excluded. The simplest use case of ranges that you might have seen, is to iterate on a <code>for</code> loop.</p><pre><code class="language-swift">for _ in 0 ..&lt; 5 {
     print("Hello world") // prints Hello world 5 times
 }
 </code></pre><h2>Cheatsheet</h2><h3>Ranges to iterate</h3><p><code>...</code> is a closed range, meaning that it <strong>includes the upper and lower bound</strong>.</p><pre><code class="language-swift">for count in 0...3 {

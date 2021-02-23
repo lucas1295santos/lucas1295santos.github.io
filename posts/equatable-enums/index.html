@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="og:site_name" content="Lucas Oliveira dot Tech"/><link rel="canonical" href="https://lucas1295santos.github.io/posts/equatable-enums"/><meta name="twitter:url" content="https://lucas1295santos.github.io/posts/equatable-enums"/><meta name="og:url" content="https://lucas1295santos.github.io/posts/equatable-enums"/><title>Quick tip #3: Equatable enums in Swift | Lucas Oliveira dot Tech</title><meta name="twitter:title" content="Quick tip #3: Equatable enums in Swift | Lucas Oliveira dot Tech"/><meta name="og:title" content="Quick tip #3: Equatable enums in Swift | Lucas Oliveira dot Tech"/><meta name="description" content="Enumerations is one of Swift's coolest features for its versatility in representing a group of related values. They can become even more versatile and expressive combined with protocols such as `Equatable`. This short article shows some tricks to do so."/><meta name="twitter:description" content="Enumerations is one of Swift's coolest features for its versatility in representing a group of related values. They can become even more versatile and expressive combined with protocols such as `Equatable`. This short article shows some tricks to do so."/><meta name="og:description" content="Enumerations is one of Swift's coolest features for its versatility in representing a group of related values. They can become even more versatile and expressive combined with protocols such as `Equatable`. This short article shows some tricks to do so."/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/css/styles.css" type="text/css"/><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"/><link rel="stylesheet" href="/css/highlight/styles/sunburst.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to Lucas Oliveira dot Tech"/></head><body class="item-page"><div class="item-header"><a href="https://www.lucasoliveira.tech/">Home</a></div><div class="wrapper"><article><div class="content">23 February 2021<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/equatable-enums-header.png" alt="Equatable enums in Swift"/><h1>Quick tip #3: Equatable enums in Swift</h1><p>Enumerations is one the Swift's coolest features for its versatility in representing a group of related values. They can become even more versatile and expressive combined with protocols such as <code>Equatable</code>. This short article shows some tricks to do so.</p><p>This article assumes that you know what an enum is in Swift. If you are not sure about that, I highly recommend you to read the <a href="https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html#ID147">Swift docs on Enums</a> and <a href="https://www.swiftbysundell.com/basics/enums/">this post by John Sundell</a> that will cover all the basics and some more.</p><h2>Comparing enums</h2><p>Since an enum represents a finite set of options or states, we often want to compare values between enums, and the main way of doing that is using a <code>switch</code> statement like represented below:</p><pre><code class="language-swift">enum CameraPermissionStatus {
+    case granted
+    case notDetermined
+    case denied
+    case restricted
+}
+
+func presentCameraScene(with status: CameraPermissionStatus) {
+    switch status {
+    case .granted:
+        routeToCameraScene()
+    case .notDetermined:
+        presentCameraPermissionAlert()
+    case .denied:
+        presentSystemPermissionsSettings()
+    case .restricted:
+        presentRestrictedAccessDialog()
+    }
+}
+</code></pre><h2>Using switch</h2><p>Usually, you want to do a specific action for each enum case, that's why a <code>switch</code> statement is so fitting. Only in different cases like testing, you are interested in a single case, so a direct comparison would be better.</p><pre><code class="language-swift">func test_getCameraPermission_expectedToBeGranted() {
+    permissionProviderStub.permissionToBeReturned = .granted
+
+    let permission = sut.getCameraPermission()
+        
+    XCTAssertEqual(permission, .granted)
+}
+</code></pre><p>A piece of cake, isn't it?</p><p>Things can become a little tricky when the enum has an associated value.</p><pre><code class="language-swift">enum FeedbackAction {
+    case toast(message: String)
+    case alert(title: String, message: String)
+    case retryConnection
+}
+
+func test_getFeedback_whenErrorIsInvalidCard_expectAlert() {
+    let sut = PurchaseError(code: "INVALID_CARD")
+    
+    let feedback = sut.getFeedback()
+    
+    XCTAssertEqual(feedback, .alert)
+}
+</code></pre><p>Now if you try to do a similar test, like the one above, with this enum you'll get the error <code>Global function 'XCTAssertEqual(_:_:_:file:line:)' requires that 'FeedbackAction' conform to 'Equatable'</code>. So the obvious way of fixing this test would be to assert inside a <code>switch</code> statement.</p><pre><code class="language-swift">func test_getFeedback_whenErrorIsInvalidCard_expectAlert() {
+    let sut = PurchaseError(code: "INVALID_CARD")
+    
+    let feedback = sut.getFeedback()
+    
+    switch feedback {
+    case .alert(let title, let message):
+        XCTAssertEqual(title, "Invalid card")
+        XCTAssertEqual(message, "Review card information and try again")
+    default:
+        XCTFail("Expected alert feedback action")
+    }
+}
+</code></pre><p>Using the <code>switch</code> statement allowed us to assert that the type and all the associated values are matching the expected, at the cost of having to add the <code>XCTFail</code> at the default case as otherwise, the test would pass even without executing the assertions. Remember that a test success is the absence of failures, so a test without asserts is still a success. But what would this test look like if we were to assert the <code>retryConnection</code> case?</p><pre><code class="language-swift">func test_getFeedback_whenErrorIsNoNetwork_expectRetryConnection() {
+    let sut = PurchaseError(code: "NO_NETWORK")
+    
+    let feedback = sut.getFeedback()
+    
+    switch feedback {
+    case .retryConnection:
+        break
+    default:
+        XCTFail("Expected retryConnection feedback action")
+    }
+}
+</code></pre><p>Since the case <code>retryConnection</code> has no associated values, we don't have any assertions to do in the <code>switch</code> statement, so the test would pass by not asserting anything, or fail by the <code>XCTFail</code> on the <code>default</code> case. Besides looking weird, this test isn't clearly following the Arrange, Act, Assert (AAA) pattern since there is no assert.</p><p>If you are not sure what this AAA thing is, <a href="https://blog.ploeh.dk/2013/06/24/a-heuristic-for-formatting-code-according-to-the-aaa-pattern/">this article from Mark Seemann</a> briefly explains it, and gives good examples on how to write tests using this pattern. The AAA pattern is a basic standard for testing in many languages, so it is worth the effort to learn and practice it.</p><h2>Using Equatable</h2><p>A cleaner way of doing the same test would be to make <code>FeedbackAction</code> conform to <code>Equatable</code>.</p><pre><code class="language-swift">enum FeedbackAction: Equatable {
+    case toast(message: String)
+    case alert(title: String, message: String)
+    case retryConnection
+}
+
+func test_getFeedback_whenErrorIsInvalidCard_expectAlert() {
+    let sut = PurchaseError(code: "INVALID_CARD")
+    
+    let receivedFeedback = sut.getFeedback()
+    
+    let expectedFeedback = FeedbackAction.alert(
+        title: "Invalid card",
+        message: "Review card information and try again"
+    )
+    XCTAssertEqual(receivedFeedback, expectedFeedback)
+}
+</code></pre><p>By default when an enum is conforming to equatable, two values are considered equal if they are the same case and if all the associated values are equal.</p><pre><code class="language-swift">let a = FeedbackAction.alert(title: "123", message: "abc")
+let b = FeedbackAction.alert(title: "hello", message: "abc")
+let c = FeedbackAction.alert(title: "123", message: "abc")
+let d = FeedbackAction.toast(message: "abc")
+
+a == b // false
+a == c // true
+a == d // false
+</code></pre><p>So if your enum has associated values only from primitive types or types that have a built-in implementation of <code>Equatable</code>, you can just make the enum conform to the protocol and it will work like magic. Conversely, on a non-trivial custom type, you may have to implement <code>Equatable</code> conformance on this type, or give up and use the <code>switch</code> strategy.</p><h2>Thanks for reading!</h2><p>Liked this content? I always announce new articles on my <a href="https://twitter.com/oliveira__lucas">Twitter Account</a>. Suggestions, feedback, and corrections are always welcome.</p></div></article></div><footer><div><ul><li class="social-media-buttons"><a class="social-media-button" href="https://twitter.com/oliveira__lucas"><i class="fa fa-twitter"></i></a><a class="social-media-button" href="https://github.com/lucas1295santos"><i class="fa fa-github"></i></a><a class="social-media-button" href="https://linkedin.com/in/lucas-santos-168769106"><i class="fa fa-linkedin"></i></a></li></ul></div><p>Generated using <a href="https://github.com/johnsundell/publish">Publish</a></p><p><a href="/feed.rss">RSS feed</a></p></footer><script src="/css/highlight/highlight.pack.js"></script><script src="https://getinsights.io/js/insights.js"></script><script>hljs.initHighlightingOnLoad();
+insights.init('p1qng0PUS7iZ0oX8');
+insights.trackPages();</script></body></html>
