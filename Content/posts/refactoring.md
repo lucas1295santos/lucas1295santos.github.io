@@ -2,6 +2,8 @@
 date: 2021-05-05 00:00
 description: Refactoring is the process of re-writing code with the intent of improving its quality without changing its external behavior. It is a constant effort that an engineering team has to make to keep or improve code quality. This post summarizes a lot of what I learned by refactoring both huge and tiny pieces of the [iFood](https://apps.apple.com/br/app/ifood-delivery-de-comida/id483017239) app.
 ---
+<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/refactoring-header.jpeg" alt="Refactoring"/>
+
 # Refactoring
 
 If you never heard the word refactoring before, the [wikipedia definition for it](https://en.wikipedia.org/wiki/Code_refactoring) is a good place to start: *code refactoring is the process of restructuring existing computer code without changing its external behavior. Refactoring is intended to improve the design, structure, and/or implementation of the software (its non-functional attributes) while preserving its functionality*. Even without knowing this definition, you are likely already applying refactoring every now and then, being renaming variables, extracting blocks of code to functions, extracting methods to classes, or modularizing classes that belong together to their own package.
