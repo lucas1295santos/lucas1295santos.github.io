@@ -11,6 +11,12 @@ body {
     text-align: center;
 }
 
+aside {
+    padding:15px;
+    background: #3a3a3a;
+    border-radius: 20px;
+}
+
 .wrapper {
     max-width: 900px;
     margin-left: auto;
