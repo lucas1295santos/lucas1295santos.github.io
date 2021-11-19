@@ -9,13 +9,17 @@ import metadata from "./metadata.json";
 class PostCardGroup extends React.Component {
   state = {};
   getCards() {
-    let cardData = metadata.map((data) => ({
-      title: data.title,
-      abstract: data.abstract,
-      date: data.date,
-      ref: postPath(data.postName),
-    }));
-    return cardData.map((card) => <PostCard key={card.title} value={card} />);
+    return metadata.map((data) => (
+      <PostCard
+        key={data.title}
+        value={{
+          title: data.title,
+          abstract: data.abstract,
+          date: data.date,
+          ref: postPath(data.postName),
+        }}
+      />
+    ));
   }
 
   render() {

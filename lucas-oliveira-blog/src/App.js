@@ -3,6 +3,7 @@ import './App.css';
 import React from 'react'
 import NavigationBar from './components/navigationBar'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./home.css";
 import PostCardGroup from './components/postCardGroup';
 
 function App() {
