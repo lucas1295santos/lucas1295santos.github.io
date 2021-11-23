@@ -63,7 +63,7 @@ I paired up with the Android and Backend developers, and I was on top of the ana
 
 A broader way to think about that is that having deep knowledge on a specific subject makes you very valuable to the company, as you can be the one to lead innovation on that field, and to be able to support the teams that need that skill. [Valve's new employee handbook](https://cdn.cloudflare.steamstatic.com/apps/valve/Valve_NewEmployeeHandbook.pdf) has a great take on that, they call it the T-shaped model, where the employee is both a broad-range generalist and an expert in a single area.
 
-![t-shaped.png](From%20Junior%20to%20Senior%20Software%20Engineer%20-%20Three%20le%20367e451ac288490188322875720c668c/t-shaped.png)
+![t-shaped.png](from-junior-to-senior/t-shaped.png)
 
 <aside>
 💡 Find something that interests you, and be really good at it. The results will follow.
