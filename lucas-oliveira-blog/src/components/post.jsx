@@ -20,7 +20,11 @@ function Post() {
 
   return (
     <div className="reactMarkDown">
-      <Markdown rehypePlugins={[rehypeRaw]} remarkPlugins={[gfm]}>
+      <Markdown
+        rehypePlugins={[rehypeRaw]}
+        remarkPlugins={[gfm]}
+        transformImageUri={(uri) => "post/" + uri}
+      >
         {post}
       </Markdown>
     </div>
