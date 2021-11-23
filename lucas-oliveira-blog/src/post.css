@@ -1,0 +1,41 @@
+.reactMarkDown {
+  margin: 1em 4em;
+}
+
+.reactMarkDown h1 {
+  margin-bottom: 1em;
+}
+
+.reactMarkDown h2 {
+  margin-bottom: 0.5em;
+}
+
+.reactMarkDown a {
+  text-decoration: underline;
+}
+
+.reactMarkDown aside {
+  background-color: rgb(241, 241, 241);
+  border-radius: 3px;
+  padding: 1rem;
+  margin-bottom: 1em;
+}
+
+.reactMarkDown ul {
+  margin-top: 1.5em;
+  margin-left: 1em;
+  margin-bottom: 1.5em;
+}
+
+.reactMarkDown ul li {
+  margin-bottom: 1em;
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+
+.reactMarkDown img {
+  max-width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
