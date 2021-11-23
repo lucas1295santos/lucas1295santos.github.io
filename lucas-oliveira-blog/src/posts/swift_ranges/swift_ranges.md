@@ -1,7 +1,3 @@
----
-date: 2021-02-03 00:00
-description: Even after some years of experience in Swift, I still find ranges a little bit tricky and have to take a look in the docs or make a playground to test things out, before using them at work. This post is a cheat sheet with examples on how to use ranges.
----
 # Swift ranges cheat sheet
 
 Even after some years of experience in Swift, I still find ranges a little bit tricky and have to take a look in the docs or make a playground to test things out, before using them at work. This post is a cheat sheet with examples on how to use ranges.
@@ -113,7 +109,7 @@ enum ScoreClassification {
     case good
     case average
     case bad
-    
+
     init(score: Int) {
         switch score {
         case 90...:
@@ -132,10 +128,12 @@ let scoreClassification = ScoreClassification(score: 87)
 print(scoreClassification) // prints good
 ```
 
-## Keep reading
+## Beyond this article
 
 If you want more details and examples, you can always check the [Apple docs](https://developer.apple.com/documentation/swift/range) for ranges, and [Swift docs](https://docs.swift.org/swift-book/LanguageGuide/BasicOperators.html#ID73) for operators. Beyond official docs, [SwiftLee](https://www.avanderlee.com/swift/ranges-explained) has great use examples.
 
-And if you are in the vibes for learning more Swift related content you can check my [article about typealias](https://www.lucasoliveira.tech/posts/quick-tip-2/), where I explain what are type aliases in Swift, and how you could use them to improve code readability.
+And if you are in the vibes for learning more Swift related content you can check my [article about typealias](https://www.lucasoliveira.tech/#/post/typealias), where I explain what are type aliases in Swift, and how you could use them to improve code readability.
 
-Thanks for reading all the way to the bottom of the page, hope you learned something new today! Until next time!
+## Thanks for reading!
+
+Liked this content? Follow me on [Twitter](https://twitter.com/oliveira__lucas) and be the first to know about new articles. Suggestions, feedback, and corrections are always welcome.

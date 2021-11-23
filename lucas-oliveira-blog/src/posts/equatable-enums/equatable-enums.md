@@ -1,10 +1,4 @@
----
-date: 2021-02-23 00:00
-description: Enumerations is one of Swift's coolest features for its versatility in representing a group of related values. They can become even more versatile and expressive combined with protocols such as `Equatable`. This short article shows some tricks to do so.
----
-<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/equatable-enums-header.png" alt="Equatable enums in Swift"/>
-
-# Quick tip #3: Equatable enums in Swift
+# Equatable enums in Swift
 
 Enumerations is one the Swift's coolest features for its versatility in representing a group of related values. They can become even more versatile and expressive combined with protocols such as `Equatable`. This short article shows some tricks to do so.
 
@@ -14,7 +8,7 @@ This article assumes that you know what an enum is in Swift. If you are not sure
 
 Since an enum represents a finite set of options or states, we often want to compare values between enums, and the main way of doing that is using a `switch` statement like represented below:
 
-``` swift
+```swift
 enum CameraPermissionStatus {
     case granted
     case notDetermined
@@ -40,12 +34,12 @@ func presentCameraScene(with status: CameraPermissionStatus) {
 
 Usually, you want to do a specific action for each enum case, that's why a `switch` statement is so fitting. Only in different cases like testing, you are interested in a single case, so a direct comparison would be better.
 
-``` swift
+```swift
 func test_getCameraPermission_expectedToBeGranted() {
     permissionProviderStub.permissionToBeReturned = .granted
 
     let permission = sut.getCameraPermission()
-        
+
     XCTAssertEqual(permission, .granted)
 }
 ```
@@ -54,7 +48,7 @@ A piece of cake, isn't it?
 
 Things can become a little tricky when the enum has an associated value.
 
-``` swift
+```swift
 enum FeedbackAction {
     case toast(message: String)
     case alert(title: String, message: String)
@@ -63,21 +57,21 @@ enum FeedbackAction {
 
 func test_getFeedback_whenErrorIsInvalidCard_expectAlert() {
     let sut = PurchaseError(code: "INVALID_CARD")
-    
+
     let feedback = sut.getFeedback()
-    
+
     XCTAssertEqual(feedback, .alert)
 }
 ```
 
 Now if you try to do a similar test, like the one above, with this enum you'll get the error `Global function 'XCTAssertEqual(_:_:_:file:line:)' requires that 'FeedbackAction' conform to 'Equatable'`. So the obvious way of fixing this test would be to assert inside a `switch` statement.
 
-``` swift
+```swift
 func test_getFeedback_whenErrorIsInvalidCard_expectAlert() {
     let sut = PurchaseError(code: "INVALID_CARD")
-    
+
     let feedback = sut.getFeedback()
-    
+
     switch feedback {
     case .alert(let title, let message):
         XCTAssertEqual(title, "Invalid card")
@@ -93,9 +87,9 @@ Using the `switch` statement allowed us to assert that the type and all the asso
 ```swift
 func test_getFeedback_whenErrorIsNoNetwork_expectRetryConnection() {
     let sut = PurchaseError(code: "NO_NETWORK")
-    
+
     let feedback = sut.getFeedback()
-    
+
     switch feedback {
     case .retryConnection:
         break
@@ -113,7 +107,7 @@ If you are not sure what this AAA thing is, [this article from Mark Seemann](htt
 
 A cleaner way of doing the same test would be to make `FeedbackAction` conform to `Equatable`.
 
-``` swift
+```swift
 enum FeedbackAction: Equatable {
     case toast(message: String)
     case alert(title: String, message: String)
@@ -122,9 +116,9 @@ enum FeedbackAction: Equatable {
 
 func test_getFeedback_whenErrorIsInvalidCard_expectAlert() {
     let sut = PurchaseError(code: "INVALID_CARD")
-    
+
     let receivedFeedback = sut.getFeedback()
-    
+
     let expectedFeedback = FeedbackAction.alert(
         title: "Invalid card",
         message: "Review card information and try again"
@@ -135,7 +129,7 @@ func test_getFeedback_whenErrorIsInvalidCard_expectAlert() {
 
 By default when an enum is conforming to equatable, two values are considered equal if they are the same case and if all the associated values are equal.
 
-``` swift
+```swift
 let a = FeedbackAction.alert(title: "123", message: "abc")
 let b = FeedbackAction.alert(title: "hello", message: "abc")
 let c = FeedbackAction.alert(title: "123", message: "abc")
@@ -150,4 +144,4 @@ So if your enum has associated values only from primitive types or types that ha
 
 ## Thanks for reading!
 
-Liked this content? I always announce new articles on my [Twitter Account](https://twitter.com/oliveira__lucas). Suggestions, feedback, and corrections are always welcome.
+Liked this content? Follow me on [Twitter](https://twitter.com/oliveira__lucas) and be the first to know about new articles. Suggestions, feedback, and corrections are always welcome.

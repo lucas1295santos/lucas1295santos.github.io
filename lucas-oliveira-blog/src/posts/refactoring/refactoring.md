@@ -1,12 +1,8 @@
----
-date: 2021-05-05 00:00
-description: Refactoring is the process of re-writing code with the intent of improving its quality without changing its external behavior. It is a constant effort that an engineering team has to make to keep or improve code quality. This post summarizes a lot of what I learned by refactoring both huge and tiny pieces of the [iFood](https://apps.apple.com/br/app/ifood-delivery-de-comida/id483017239) app.
----
-<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/refactoring-header.jpeg" alt="Refactoring"/>
+![Refactoring](refactoring/cover.jpeg)
 
 # Refactoring
 
-If you never heard the word refactoring before, the [wikipedia definition for it](https://en.wikipedia.org/wiki/Code_refactoring) is a good place to start: *code refactoring is the process of restructuring existing computer code without changing its external behavior. Refactoring is intended to improve the design, structure, and/or implementation of the software (its non-functional attributes) while preserving its functionality*. Even without knowing this definition, you are likely already applying refactoring every now and then, being renaming variables, extracting blocks of code to functions, extracting methods to classes, or modularizing classes that belong together to their own package.
+If you never heard the word refactoring before, the [wikipedia definition for it](https://en.wikipedia.org/wiki/Code_refactoring) is a good place to start: _code refactoring is the process of restructuring existing computer code without changing its external behavior. Refactoring is intended to improve the design, structure, and/or implementation of the software (its non-functional attributes) while preserving its functionality_. Even without knowing this definition, you are likely already applying refactoring every now and then, being renaming variables, extracting blocks of code to functions, extracting methods to classes, or modularizing classes that belong together to their own package.
 
 ## Refactor cost
 
@@ -32,9 +28,9 @@ Not only a big rewrite is a lot of work, but it can also be a big hit to the tea
 
 The ideal way to go about it is to never let things get so far out of hand to get to this doomed code state. Continous refactor and caring will go a long way to maintain the code in good quality. Of course, that doesn't mean that you'll never have to engage in a huge refactor or a rewrite again, sometimes the business evolves in a way that requirements change or takes gigantic proportions that weren't planned, and that's all fair and square.
 
-The book [The Pragmatic Programmer](https://www.amazon.com/Pragmatic-Programmer-journey-mastery-Anniversary/dp/0135957052) has a section about Software Entropy, and they make a beautiful analogy that bad code is like a building with broken windows. The feeling of abandonment will quickly spread among the developers, in a way that no one will try to repair it, or even take care to not damage it further. The remedy proposed by the authors is to not leave broken windows: fix issues as soon as you see them, or at least document the flaws and work on them later (later in this context means *asap*, not never). It is important to make a statement that that codebase is not abandoned.
+The book [The Pragmatic Programmer](https://www.amazon.com/Pragmatic-Programmer-journey-mastery-Anniversary/dp/0135957052) has a section about Software Entropy, and they make a beautiful analogy that bad code is like a building with broken windows. The feeling of abandonment will quickly spread among the developers, in a way that no one will try to repair it, or even take care to not damage it further. The remedy proposed by the authors is to not leave broken windows: fix issues as soon as you see them, or at least document the flaws and work on them later (later in this context means _asap_, not never). It is important to make a statement that that codebase is not abandoned.
 
-Most of the refactoring is better done alongside *product-driven* tasks. You can utilize that you are working on a context anyway, and improve it by refactoring the bits that you found hard to understand, or that weren't flexible enough to accommodate your new use-case.
+Most of the refactoring is better done alongside _product-driven_ tasks. You can utilize that you are working on a context anyway, and improve it by refactoring the bits that you found hard to understand, or that weren't flexible enough to accommodate your new use-case.
 
 The book [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) makes a simple analogy to this attitude comparing it to a Boy Scout rule to always leave the camp cleaner than found. With enough people with this mindset, code quality can be improved over time.
 
@@ -42,7 +38,7 @@ The book [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Crafts
 
 Keeping a healthy codebase is not a task to be tackled by an individual, refactoring messy chunks of code may be impossible without a supporting team. The improvements made by one person can be quickly dimmed by other developers going in the opposite direction.
 
-To be able to engage and keep developers comfortable in taking code quality seriously, it is important to have the whole team stand by it. 
+To be able to engage and keep developers comfortable in taking code quality seriously, it is important to have the whole team stand by it.
 
 The engineering team should be supporting each other by reviewing code, designing solutions together, pair programming, keeping track of technical debt, and backing each other up to keep the shipping business impact while making code refactors.
 
@@ -66,4 +62,4 @@ The book [Refactoring Improving the Design of Existing Code](https://martinfowle
 
 ## Thanks for reading!
 
-Liked this content? I always announce new articles on my [Twitter Account](https://twitter.com/oliveira__lucas). Suggestions, feedback, and corrections are always welcome.
+Liked this content? Follow me on [Twitter](https://twitter.com/oliveira__lucas) and be the first to know about new articles. Suggestions, feedback, and corrections are always welcome.

@@ -1,12 +1,8 @@
----
-date: 2020-12-13 00:00
-description: Swift's type-safety is one of the language's main features, and it is extremely powerful to harness the compiler type-check to your code. In this short article, I'll give some tips to improve readability and clearness of intent using some typing resources available.
----
-# Quick tip #2: Typealias to improve readability
+# Typealias to improve readability
 
 Swift's type-safety is one of the language's main features, and it is extremely powerful to harness the compiler type-check to your code. Meaning that making good use of protocols, protocol composition, default values, type-constraints, inheritance and, type aliasing, is important to guide a developer to use your classes, modules, or frameworks in the intended way, as the types constraints the data and its flow. In this short article, I'll give some tips to improve readability and clearness of intent using some typing resources available.
 
-This article is in a way, an iteration on the last one about naming in software. You can read this one independently, but if you are interested in the subject, you can read it [here](https://www.lucasoliveira.tech/posts/naming). The article explains why naming is so important and gives some general advice on how to choose good names in software.
+This article is in a way, an iteration on the last one about naming in software. You can read this one independently, but if you are interested in the subject, you can read it [here](https://www.lucasoliveira.tech//#/post/naming). The article explains why naming is so important and gives some general advice on how to choose good names in software.
 
 ## Typealias
 
@@ -43,7 +39,7 @@ Last but not least, `TimeInterval` from `Foundation` is a very good example of h
 ```swift
 // From Foundation.NSDate
 public typealias TimeInterval = Double
-// An example of foundation that uses TimeInterval 
+// An example of foundation that uses TimeInterval
 extension NSDate {
     open func addingTimeInterval(_ ti: TimeInterval) -> Self
 }
@@ -59,7 +55,7 @@ extension NSDate {
 
 And the coolest thing about the `TimeInterval` example is how it is possible to add documentation to the type if more information is needed.
 
-<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post_quicktip2_img1.png" alt="TimeInterval documentation" style="width:480px;"/>
+<img src="typealias/doc.png" alt="TimeInterval documentation" style="width:480px;"/>
 
 You could create documentation for your own type aliases the same way you would create for a class or function. If you are new to documentation on XCode, [this guide](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/index.html#//apple_ref/doc/uid/TP40016497-CH2-SW1) has everything you have to know (plus some cool formatting tips for playgrounds).
 
@@ -70,4 +66,4 @@ typealias OrderUUID = String
 
 ## Thanks for reading!
 
-Liked this content? I always announce new articles on my [Twitter Account](https://twitter.com/oliveira__lucas). Suggestions, feedback, and corrections are always welcome.
+Liked this content? Follow me on [Twitter](https://twitter.com/oliveira__lucas) and be the first to know about new articles. Suggestions, feedback, and corrections are always welcome.

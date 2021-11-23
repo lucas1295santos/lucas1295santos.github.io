@@ -1,7 +1,3 @@
----
-date: 2020-10-01 00:00
-description: Writing unit tests is one of the key responsibilities of a developer. Although writing a test is not that hard, setting up a controlled environment where you can unit test one component might be challenging, especially if your component is surrounded by legacy code. Setting up testing doubles is a winner technique to tackle this problem.
----
 # Writing good tests with Tests Doubles
 
 Writing unit tests is one of the key responsibilities of a developer. Although writing a test is not that hard, setting up a controlled environment where you can unit test one component might be challenging, especially if your component is surrounded by legacy code. Setting up testing doubles is a winner technique to tackle this problem.
@@ -31,7 +27,7 @@ class UserData {
     func saveUserName(name: String) {
         UserDefaults.standard.setValue(name, forKey: "USER_NAME")
     }
-    
+
     func getUserName() -> String? {
         UserDefaults.standard.string(forKey: "USER_NAME")
     }
@@ -42,18 +38,18 @@ class UserData {
 class ViewControllerTests: XCTestCase {
     func test_greetingsLabel_beforeSettingName_expectNameToBeGuest() {
         let sut = ViewController()
-        
+
         sut.configure()
 
         XCTAssertEqual(sut.greetingsLabel.text, "Hello, Guest!")
     }
-    
+
     func test_greetingsLabel_afterSettingName_expectNameToEqualsUserName() {
         let sut = ViewController()
         UserData().saveUserName(name: "John")
 
         sut.configure()
-        
+
         XCTAssertEqual(sut.greetingsLabel.text, "Hello, John!")
     }
 }
@@ -83,7 +79,7 @@ class UserData: UserDataProtocol {
     func saveUserName(name: String) {
         UserDefaults.standard.setValue(name, forKey: "USER_NAME")
     }
-    
+
     func getUserName() -> String? {
         UserDefaults.standard.string(forKey: "USER_NAME")
     }
@@ -93,7 +89,7 @@ class UserData: UserDataProtocol {
 
 class UserDataMock: UserDataProtocol {
     func saveUserName(name: String) {}
-    
+
     var userNameToBeReturned: String?
     func getUserName() -> String? {
         return userNameToBeReturned
@@ -116,7 +112,7 @@ class ViewController: UIViewController {
     var greetingsLabel = UILabel()
     // Holding an instance of an object that implements UserDataProtocol
     let userData: UserDataProtocol
-    
+
     // We set the default value of userData as a new instance of a UserData object by default
     // Doing it this way, it is important to remember to init this class passing a new instance
     // of UserDataMock when testing
@@ -124,14 +120,14 @@ class ViewController: UIViewController {
         self.userData = userData
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configure() {
-        // Now instead of creating a UserData instance, and using it. We will use the 
+        // Now instead of creating a UserData instance, and using it. We will use the
         // instance provided at init time, that could be the real UserData, or the
         // test double UserDataMock.
         let userName = userData.getUserName() ?? "Guest"
@@ -149,20 +145,20 @@ Now that the `ViewController` is set up, let's rewrite the `ViewControllerTests`
         userData.userNameToBeReturned = nil
         // makes the ViewController use the test double
         let sut = ViewController(userData: userData)
-        
+
         sut.configure()
-        
+
         XCTAssertEqual(sut.greetingsLabel.text, "Hello, Guest!")
     }
-    
+
     func test_greetingsLabel_userNameIsNotNil_expectNameToEqualsUserName() {
         let userData = UserDataMock()
         // sets up UserDataMock to return John when getUserName is called
         userData.userNameToBeReturned = "John"
         let sut = ViewController(userData: userData)
-        
+
         sut.configure()
-         
+
         XCTAssertEqual(sut.greetingsLabel.text, "Hello, John!")
     }
 ```
@@ -175,8 +171,12 @@ To master the usage of test doubles, you have to master writing testable code, w
 
 One thing to keep in mind is that you always have to decide which dependencies of your class can be decoupled from it, meaning that if the dependency change implementation, the class can continue working without changing as well. So on the class's tests, you can use test doubles to substitute every decoupled dependency, and test the class in a reliable and consistent environment, where you can easily test any scenario in a way that the tests will only fail if internal logic changes.
 
-## What's next?
+## Beyond this article
 
 If you want to know more about `DIP` and the other `SOLID` principles, [this article from hackernoon](https://hackernoon.com/solid-principles-made-easy-67b1246bcdf) is a great light start. And [This repo from ochococo](https://github.com/ochococo/OOD-Principles-In-Swift) gives nice and easy examples and has links to in-depth articles that are really good reading.
 
-If you want to know how to unit test asynchronous code, check out [my article about it](https://www.lucasoliveira.tech/posts/async-tests).
+If you want to know how to unit test asynchronous code, check out [my article about it](https://www.lucasoliveira.tech/#/post/async-tests).
+
+## Thanks for reading!
+
+Liked this content? Follow me on [Twitter](https://twitter.com/oliveira__lucas) and be the first to know about new articles. Suggestions, feedback, and corrections are always welcome.

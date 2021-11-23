@@ -6,9 +6,57 @@
         "postName": "from_junior_to_senior"
     },
     {
+        "title": "Refactoring",
+        "abstract": "Refactoring is the process of re-writing code with the intent of improving its quality without changing its external behavior. It is a constant effort that an engineering team has to make to keep or improve code quality. This post summarizes a lot of what I learned by refactoring both huge and tiny pieces of the iFood app.",
+        "date": "05/05/2021",
+        "postName": "refactoring"
+    },
+    {
+        "title": "Equatable enums in Swift",
+        "abstract": "Enumerations is one of Swift's coolest features for its versatility in representing a group of related values. They can become even more versatile and expressive combined with protocols such as Equatable. This short article shows some tricks to do so.",
+        "date": "23/02/2021",
+        "postName": "equatable-enums"
+    },
+    {
+        "title": "Swift ranges cheat sheet",
+        "abstract": "Even after some years of experience in Swift, I still find ranges a little bit tricky and have to take a look in the docs or make a playground to test things out, before using them at work. This post is a cheat sheet with examples on how to use ranges.",
+        "date": "03/02/2021",
+        "postName": "swift_ranges"
+    },
+    {
+        "title": "Typealias to improve readability",
+        "abstract": "Swift's type-safety is one of the language's main features, and it is extremely powerful to harness the compiler type-check to your code. In this short article, I'll give some tips to improve readability and clearness of intent using some typing resources available.",
+        "date": "13/12/2020",
+        "postName": "typealias"
+    },
+    {
+        "title": "Naming and code quality",
+        "abstract": "Naming is one of the most underrated and overlooked skills that a good programmer should have, yet is a skill that we use every day by giving names to variables, functions, services, and so on. Good names make messy code easier to understand, and makes good code a delight to read. In this post, I'll share some insights on how to detect bad naming, and how to improve it.",
+        "date": "14/11/2020",
+        "postName": "naming"
+    },
+    {
+        "title": "Writing good tests with Tests Doubles",
+        "abstract": " Writing unit tests is one of the key responsibilities of a developer. Although writing a test is not that hard, setting up a controlled environment where you can unit test one component might be challenging, especially if your component is surrounded by legacy code. Setting up testing doubles is a winner technique to tackle this problem.",
+        "date": "01/10/2020",
+        "postName": "test-doubles"
+    },
+    {
+        "title": "Improving Error Handling in your App in Swift.",
+        "abstract": "We want our software to be error-proof, but in reality, error scenarios will always exist. So this article's objective is to explain why you should handle errors on your app, give you a rule of thumb on when treating errors, and give some practical improvements you could apply on your app",
+        "date": "04/08/2020",
+        "postName": "improving-error-handling"
+    },
+    {
         "title": "Testing asynchronous code",
         "abstract": "When you are starting out on testing your code, you might find asynchronous methods a little bit tricky to test. But do not worry, XCTestExpectation got you covered if you want to assert that an async block will execute, or even assert that it will not execute.",
         "date": "07/07/2020",
         "postName": "async-tests"
+    },
+    {
+        "title": "Array copy-on-write",
+        "abstract": "Copy-on-write is a pattern that aims to save storage or memory allocation whenever it is possible by delaying copying a resource as long as it is possible. This quick article shows how it works in Swift.",
+        "date": "24/05/2020",
+        "postName": "copy-on-write"
     }
 ]

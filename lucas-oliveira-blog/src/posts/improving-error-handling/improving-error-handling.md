@@ -1,7 +1,3 @@
----
-date: 2020-08-04 00:00
-description: We want our software to be error-proof, but in reality, error scenarios will always exist.<br></br>So this article's objective is to explain why you should handle errors on your app, give you a rule of thumb on when treating errors, and give some practical improvements you could apply on your app.
----
 # Improving Error Handling in your App in Swift.
 
 We want our software to be error-proof, but in reality, error scenarios will always exist.
@@ -10,8 +6,7 @@ So this article's objective is to explain why you should handle errors on your a
 
 ## Why handling errors?
 
-### Finding errors *asap*
-
+### Finding errors _asap_
 
 Worse than finding a bug on your production app is learning that the bug you just found is around for several releases.
 
@@ -28,21 +23,19 @@ If for some reason this function is ever invoked with a `nil` telefoneNumber, it
 
 ### Improving User Experience (UX)
 
-
 It might be really frightening to a user with no technology background to be prompted with an error dialog full of tech words and error codes, especially if he just made a critical action like a purchase. Take a look at the picture on the left.
 
-<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post4_img1.png" alt="Error notification" style="width:500px;"/>
+<img src="improving-error-handling/empty_state.png" alt="Error notification" style="width:500px;"/>
 
 On the other hand, the picture to the right explains what happened and how the user could proceed.
 
 ### Recovering from an error state to a success
 
-
 With a really well-crafted error recovering strategy you could even recover a user that got in an error state, to the main flow of your application that will lead to a goal (like making a purchase).
 
 Recovering from errors is not only important for the tech team, but it is also beneficial for the business as a whole. Commonly, digital products lose some conversion percentual points due to techinical issues. And good error handling might mitigate this issue.
 
-<img src="https://raw.githubusercontent.com/lucas1295santos/lucas1295santos.github.io/master/images/post4_image2.png" alt="Error state recovery" style="width:500px;"/>
+<img src="improving-error-handling/error_recovery.png" alt="Error state recovery" style="width:500px;"/>
 
 The example above gives clear instructions and even some shortcuts on how to get out of this error and try another product.
 
@@ -52,15 +45,14 @@ Maybe your App is nothing like any of the examples I gave so far, and you are no
 
 Consider handling errors every time you...
 
-* ...make a request to an external source (networking)
-* ...capture user input
-* ...encode or decode some data
-* ...escape a function prior to its full execution (early return)
+- ...make a request to an external source (networking)
+- ...capture user input
+- ...encode or decode some data
+- ...escape a function prior to its full execution (early return)
 
 ## Practical improvements for your App
 
 ### Monitoring tool
-
 
 This is the most important improvement that you could do! With a monitoring tool, you can have useful data to discover, understand, and prioritize errors.
 
@@ -68,21 +60,20 @@ By understanding the volumetry of an error, you could decide between adding a fi
 
 There are several monitoring tools available on the market, like [Dynatrace](https://www.dynatrace.com/) or [New Relic](https://newrelic.com/). The monitoring tool that I use at iFood is [Logz.io](https://logz.io/). It provides all the utility that we need to keep track of error logs:
 
-* Logs over time
-* Querying for specific logs
-* Configuring alerts to send to Slack
-* Dashboard creation
+- Logs over time
+- Querying for specific logs
+- Configuring alerts to send to Slack
+- Dashboard creation
 
 With a good tool setup in the project, it is time to bring a monitoring culture to the team. You could start establishing some new tasks that should be done at every new feature development.
 
-* Map all error cases
-* Create logs for the error cases
-* Create alerts for the logs to get any critical scenario. It is important that the alerts are sent to a channel where all the devs have access.
-* Create a Dashboard containing all the logs for that feature
-* Monitor the dashboard periodically. You could make a recurrent event on the calendar to be reminded.
+- Map all error cases
+- Create logs for the error cases
+- Create alerts for the logs to get any critical scenario. It is important that the alerts are sent to a channel where all the devs have access.
+- Create a Dashboard containing all the logs for that feature
+- Monitor the dashboard periodically. You could make a recurrent event on the calendar to be reminded.
 
 ### Swift's Error protocol
-
 
 Swift's error protocol allows you to create expressive errors that will give you useful information to find and act on a possible issue. Having rich errors will also help you to create insightful dashboards and precise alerts on your monitoring tool.
 
@@ -94,11 +85,12 @@ enum SimpleError: Error {
     case network(payload: [String: Any])
 }
 ```
+
 In this example, we will capture the payload of the request that caused a network error. Doing so, we could look for patterns on the payloads, and understand what really causes the error.
 
 **Disclaimer:** if you want to do an error treatment like that one where you send the payload from a network request, you must mask any user sensitive data.
 
-You could also conform to this protocol in a `struct` so you can have as much information as you need on the error. This is useful when you want to custom tailor an error for a very specific scenario. 
+You could also conform to this protocol in a `struct` so you can have as much information as you need on the error. This is useful when you want to custom tailor an error for a very specific scenario.
 
 ```swift
 struct StructError: Error {
@@ -146,7 +138,6 @@ extension RegisterUserError: LocalizedError {
 Now if an error of type `RegisterUserError` happens, you could display `error.localizedDescription` to the user.
 
 ### Don't use `nil` as an error
-
 
 Take a look at the function below, it is uncanny how familiar this code is.
 
@@ -211,8 +202,7 @@ This way, the caller function could differentiate an encoding error from a netwo
 
 ### Separate error handling from the actual functionality
 
-
-If you are familiar with the `SOLID` principles, you know the importance of the *Single Responsibility Principle (SRP)*. The *SRP* says that our software units should have a single responsibility. What is a responsibility depends on the size of the software unit, the responsibility that a function can have is more narrow than the responsibility that a class or a module could handle.
+If you are familiar with the `SOLID` principles, you know the importance of the _Single Responsibility Principle (SRP)_. The _SRP_ says that our software units should have a single responsibility. What is a responsibility depends on the size of the software unit, the responsibility that a function can have is more narrow than the responsibility that a class or a module could handle.
 
 Take a look on the example below:
 
@@ -233,7 +223,7 @@ func registerUser(_ user: User) throws {
 }
 ```
 
-The function `registerUser` breaks *SRP* and it is not easy to read because the code that actually register the user is at the end of the function, with all the validation rules first.
+The function `registerUser` breaks _SRP_ and it is not easy to read because the code that actually register the user is at the end of the function, with all the validation rules first.
 
 We could greatly improve this function by separating the error handling responsibility from the user registering responsibility.
 
@@ -258,20 +248,22 @@ func validateUser(_ user: User) throws {
 }
 ```
 
-Conforming to the *SRP* made this function that much easier to read.
+Conforming to the _SRP_ made this function that much easier to read.
 
-## Recap
+## Takeaways
 
-* 😌 Don't leave errors unhandled, your users will appreciate it.
-* ☁️ Use a monitoring tool on your project.
-* ❤️ Use Swift's `Error` protocol to get expressive and useful errors.
-* 🙅‍♂️ Don't use `nil` as an error.
-* 👨‍💻 Separate error validation and treatment from the actual functionality.
+- 😌 Don't leave errors unhandled, your users will appreciate it.
+- ☁️ Use a monitoring tool on your project.
+- ❤️ Use Swift's `Error` protocol to get expressive and useful errors.
+- 🙅‍♂️ Don't use `nil` as an error.
+- 👨‍💻 Separate error validation and treatment from the actual functionality.
 
-## What's next?
+## Beyond this article
 
-If you are interested in error handling, chapter 6 of *Clean Code from Robert C. Martin (a.k.a Uncle Bob)* is a must-read. This chapter was the biggest reference to this article, and it was what really drew my attention to the importance of handling errors. I consider this book a must-have for any software engineer, so you might as well [get it on Amazon](https://www.amazon.com.br/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882).
+If you are interested in error handling, chapter 6 of _Clean Code from Robert C. Martin (a.k.a Uncle Bob)_ is a must-read. This chapter was the biggest reference to this article, and it was what really drew my attention to the importance of handling errors. I consider this book a must-have for any software engineer, so you might as well [get it on Amazon](https://www.amazon.com.br/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882).
 
-If you want to know more about `SRP` and the other `SOLID` principles, [this article from hackernoon](https://hackernoon.com/solid-principles-made-easy-67b1246bcdf) is a great light start. And [This repo from ochococo](https://github.com/ochococo/OOD-Principles-In-Swift) gives nice and easy examples and has links to in-depth articles that are really good reading.
+If you want to know more about `SRP` and the other `SOLID` principles, [this article at hackernoon](https://hackernoon.com/solid-principles-made-easy-67b1246bcdf) is a great light start. And [This repo from ochococo](https://github.com/ochococo/OOD-Principles-In-Swift) gives nice and easy examples and has links to in-depth articles that are really good reading.
 
-Thank you for reading! I hope this is was insightful and that you can apply those ideas on your projects. Take care and good error handling!
+## Thanks for reading!
+
+Liked this content? Follow me on [Twitter](https://twitter.com/oliveira__lucas) and be the first to know about new articles. Suggestions, feedback, and corrections are always welcome.

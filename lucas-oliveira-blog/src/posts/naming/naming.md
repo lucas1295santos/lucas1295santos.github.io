@@ -1,7 +1,3 @@
----
-date: 2020-11-14 00:00
-description: Naming is one of the most underrated and overlooked skills that a good programmer should have, yet is a skill that we use every day by giving names to variables, functions, services, and so on. Good names make messy code easier to understand, and makes good code a delight to read. In this post, I'll share some insights on how to detect bad naming, and how to improve it.
----
 # Naming and code quality
 
 Naming is one of the most underrated and overlooked skills that a good programmer should have, yet is a skill that we use every day by giving names to variables, functions, services, and so on. Good names make messy code easier to understand, and makes good code a delight to read. In this post, I'll share some insights on how to detect bad naming, and how to improve it.
@@ -79,7 +75,7 @@ class JosephusProblem {
 
 Executing the function `print` after inciating with parameters `JosephusProblem(8, 2)` would display the output:
 
-```
+```c
  2 4 6 0 3 7 5 1
 ```
 
@@ -161,7 +157,7 @@ for _ in 0 ..< numberOfSoldiers {
 }
 ```
 
-Reading this expression before the refactor you may need to go further in inspecting the code to check what is `n`, and to understand what are the boolean values on `circle` so we can know what does it mean to have a `circle` full of *true* values.
+Reading this expression before the refactor you may need to go further in inspecting the code to check what is `n`, and to understand what are the boolean values on `circle` so we can know what does it mean to have a `circle` full of _true_ values.
 
 After the refactor the code kind of explains itself. And that's beautiful!
 
@@ -182,9 +178,9 @@ Now that you got a pretty good idea on why naming matters, the next natural ques
 
 Remember that you are writing code that other humans will read, reuse, extend, modify or, even delete. So always aim for following these general rules:
 
-* Intent revealing: your code should make explicit what it does.
-* Accurate: choosing names that imply that the code does something that it doesn't is the same as setting up a trap.
-* Consistent: consistent names make it easier to find patterns and deduce behavior. If you have three functions that just return a value, don't call them `getX`, `retrieveY`, and `fetchZ`. People will assume that they do three different things, so choose a pattern and stick with it.
+- Intent revealing: your code should make explicit what it does.
+- Accurate: choosing names that imply that the code does something that it doesn't is the same as setting up a trap.
+- Consistent: consistent names make it easier to find patterns and deduce behavior. If you have three functions that just return a value, don't call them `getX`, `retrieveY`, and `fetchZ`. People will assume that they do three different things, so choose a pattern and stick with it.
 
 ### Conform to language/framework standards
 
@@ -216,10 +212,14 @@ Sometimes it is really hard to choose a good name, and showing the code to someo
 
 A great way of sharing the code with peers is by reading the code out loud and explaining how it works, the effort of contextualizing the problem and explaining the solution bit by bit may give you good insights. Pair programming also helps a lot, as often developers disagree with naming choices, leading to a rich discussion. And my favorite method is doing a pair code review, where you open a draft pull request and review the code along with one or more teammates, there are always lots of insights and suggestions of improvement.
 
- ### Go beyond this article
+## Beyond this article
 
 Here are some great resources that helped me be better at naming in software, and were inspirations for this article:
 
-* Good motivation on why you should care about naming, and its general principles by Gergely Orosz from the Pragmatic Engineer. [Read the post!](https://blog.pragmaticengineer.com/readable-code)
-* The section *Naming Things* from chapter 7 of *The Pragmatic Programmer* provides good examples, and questions that you should be doing while renaming code. [Buy it on Amazon!](https://ler.amazon.com.br/kp/embed?asin=B07VRS84D1&preview=newtab&linkCode=kpe&ref_=cm_sw_r_kb_dp_W89RFbA9SYG0F)
-* Chapter 2 *Meaningful names* from *Clean Code* is also a great reference, and was the chapter that made me realize the importance of taking the time and effort to name software. [Buy it on Amazon!](https://ler.amazon.com.br/kp/embed?asin=B001GSTOAM&preview=newtab&linkCode=kpe&ref_=cm_sw_r_kb_dp_cf-RFbNB5S5HN)
+- Good motivation on why you should care about naming, and its general principles by Gergely Orosz from the Pragmatic Engineer. [Read the post!](https://blog.pragmaticengineer.com/readable-code)
+- The section _Naming Things_ from chapter 7 of _The Pragmatic Programmer_ provides good examples, and questions that you should be doing while renaming code. [Buy it on Amazon!](https://ler.amazon.com.br/kp/embed?asin=B07VRS84D1&preview=newtab&linkCode=kpe&ref_=cm_sw_r_kb_dp_W89RFbA9SYG0F)
+- Chapter 2 _Meaningful names_ from _Clean Code_ is also a great reference, and was the chapter that made me realize the importance of taking the time and effort to name software. [Buy it on Amazon!](https://ler.amazon.com.br/kp/embed?asin=B001GSTOAM&preview=newtab&linkCode=kpe&ref_=cm_sw_r_kb_dp_cf-RFbNB5S5HN)
+
+## Thanks for reading!
+
+Liked this content? Follow me on [Twitter](https://twitter.com/oliveira__lucas) and be the first to know about new articles. Suggestions, feedback, and corrections are always welcome.
