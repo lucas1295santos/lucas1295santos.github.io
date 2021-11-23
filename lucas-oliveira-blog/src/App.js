@@ -11,6 +11,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  HashRouter
 } from "react-router-dom";
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
     document.title = "Lucas Oliveira's Blog"
   }, [])
 
-  return <Router>
+  return <HashRouter>
   <NavigationBar/>
     <Routes>
       <Route exact path="/" element={<Home/>}/>
@@ -26,7 +27,7 @@ function App() {
       <Route path="post/:id" element={<Post />} />
       <Route path="*" element={<NotFound/>}/>
     </Routes>
-  </Router>
+  </HashRouter>
 }
 
 export default App;
