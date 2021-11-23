@@ -17,6 +17,7 @@
     "react-router-dom": "^6.0.2",
     "react-scripts": "^3.4.4",
     "react-social-icons": "^5.6.1",
+    "react-syntax-highlighter": "^15.4.5",
     "rehype-attr": "^2.0.6",
     "rehype-raw": "^6.1.0",
     "remark-gfm": "^3.0.1",

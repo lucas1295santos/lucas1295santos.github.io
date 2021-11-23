@@ -4,5 +4,11 @@
         "abstract": "Recently, I got promoted to Senior Software Engineer at iFood. This got me thinking about how this changes things for me, in the sense of how expectations shift. To figure out the way forward, I've decided to take a look in the past and recall what I have learned in this time, and how I've changed.",
         "date": "22/11/2021",
         "postName": "from_junior_to_senior"
+    },
+    {
+        "title": "Testing asynchronous code",
+        "abstract": "When you are starting out on testing your code, you might find asynchronous methods a little bit tricky to test. But do not worry, XCTestExpectation got you covered if you want to assert that an async block will execute, or even assert that it will not execute.",
+        "date": "07/07/2020",
+        "postName": "async-tests"
     }
 ]
