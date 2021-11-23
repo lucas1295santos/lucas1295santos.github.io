@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react'
+import React, { useEffect } from 'react'
 import NavigationBar from './components/navigationBar'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./home.css";
@@ -14,6 +14,10 @@ import {
 } from "react-router-dom";
 
 function App() {
+  useEffect(() => {
+    document.title = "Lucas Oliveira's Blog"
+  }, [])
+
   return <Router>
   <NavigationBar/>
     <Routes>
