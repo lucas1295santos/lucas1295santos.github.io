@@ -1,2 +1,0 @@
-(this["webpackJsonplucas-oliveira-blog"]=this["webpackJsonplucas-oliveira-blog"]||[]).push([[9],{472:function(i,a,s){i.exports=s.p+"static/media/naming.feb66311.md"}}]);
-//# sourceMappingURL=9.f0db8caa.chunk.js.map

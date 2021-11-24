@@ -1,2 +1,0 @@
-(this["webpackJsonplucas-oliveira-blog"]=this["webpackJsonplucas-oliveira-blog"]||[]).push([[5],{468:function(i,o,s){i.exports=s.p+"static/media/copy-on-write.bc678721.md"}}]);
-//# sourceMappingURL=5.a8b0b24f.chunk.js.map
