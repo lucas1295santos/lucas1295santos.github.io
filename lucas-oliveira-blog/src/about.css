@@ -1,0 +1,10 @@
+.about a {
+  color: #158d11;
+  text-decoration: underline;
+}
+
+.about ul {
+  margin-top: 0em;
+  margin-left: 0em;
+  margin-bottom: 2em;
+}
