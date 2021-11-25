@@ -7,6 +7,7 @@ import gfm from "remark-gfm";
 import CodeBlock from "./codeBlock";
 import { prism } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import Recomendation from "./recomendation";
 
 function Post() {
   let { id } = useParams();
@@ -48,6 +49,7 @@ function Post() {
       >
         {post}
       </Markdown>
+      <Recomendation postName={id} />
     </div>
   );
 }
