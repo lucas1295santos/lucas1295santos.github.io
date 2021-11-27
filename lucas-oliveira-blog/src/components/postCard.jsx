@@ -8,7 +8,9 @@ class PostCard extends React.Component {
       <Card text="dark" className="my-4" style={{ textAlign: "left" }}>
         <Card.Body>
           <Card.Title style={{ fontSize: "2rem" }}>
-            <Link to={this.props.value.ref}>{this.props.value.title}</Link>
+            <Link to={"/" + this.props.value.ref}>
+              {this.props.value.title}
+            </Link>
           </Card.Title>
           <Card.Text style={{ fontSize: "1rem" }}>
             {this.props.value.abstract}
